@@ -10,9 +10,7 @@
  */
 import React, { useState, useEffect } from "react";
 import { useTheme } from "@/context/ThemeContext";
-import { useLogoAnimation } from "@/hooks/useLogoAnimation";
 import { useCanvasPan } from "@/hooks/useCanvasPan";
-import { LogoAnimation } from "@/components/logo/LogoAnimation";
 import { WorkingCanvas } from "@/components/canvas/WorkingCanvas";
 import { CanvasRow1 } from "@/components/canvas/CanvasRow1";
 import { CanvasRow2 } from "@/components/canvas/CanvasRow2";
@@ -25,8 +23,7 @@ import { ColourPicker } from "@/components/theme/ColourPicker";
 import styles from "./page.module.css";
 
 export default function RootPage() {
-  const { isOnLanding, theme } = useTheme();
-  const { shouldAnimate } = useLogoAnimation();
+  const { isOnLanding } = useTheme();
   const { panRef, triggerPan } = useCanvasPan();
   const [pickerVisible, setPickerVisible] = useState(false);
   const [language, setLanguage] = useState<"en" | "hi">("en");
@@ -46,19 +43,11 @@ export default function RootPage() {
 
   return (
     <div className={styles.pageRoot}>
-      {/* Fixed logo — always above everything */}
-      <LogoAnimation
-        animate={shouldAnimate}
-        showTagline={!isOnLanding}
-        taglineBackgroundColour={theme.row4_5[4] ?? "#fff0cc"}
-      />
-
       {/* Main scene — viewport clips, pan container scrolls */}
       <div className={styles.viewport}>
         <div
           ref={panRef}
           className={styles.panContainer}
-          style={{ paddingTop: 80 }} // offset for fixed logo height
         >
           {/* ── LANDING CANVAS ───────────────────── */}
           <div className={styles.canvasScene}>
