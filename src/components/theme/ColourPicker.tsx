@@ -3,7 +3,7 @@
  * ColourPicker — Landing page colour selection list.
  * Appears to the RIGHT of the canvas after logo animation completes.
  * Shows all 10 themes as a vertical list with colour swatches.
- * Selected option shows a ○ indicator.
+ * Clicking a colour name selects that theme and enters the home page.
  */
 import React from "react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -37,7 +37,10 @@ export function ColourPicker({ visible, onProceed }: ColourPickerProps) {
                 <li key={id}>
                   <button
                     className={`${styles.option} ${sel ? styles.selected : ""}`}
-                    onClick={() => selectTheme(id)}
+                    onClick={() => {
+                      selectTheme(id);
+                      onProceed();
+                    }}
                     aria-pressed={sel}
                   >
                     <span className={styles.swatch} style={{ background: t.swatchGradient }} aria-hidden="true" />
@@ -48,13 +51,6 @@ export function ColourPicker({ visible, onProceed }: ColourPickerProps) {
               );
             })}
           </ul>
-          <motion.button
-            className={`${styles.proceed} langdon`}
-            onClick={onProceed}
-            initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.4 }}
-          >
-            ENTER →
-          </motion.button>
         </motion.div>
       )}
     </AnimatePresence>
