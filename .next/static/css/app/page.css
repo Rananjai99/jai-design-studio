@@ -1,0 +1,166 @@
+/*!****************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[13].oneOf[7].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[13].oneOf[7].use[3]!./src/components/logo/LogoAnimation.module.css ***!
+  \****************************************************************************************************************************************************************************************************************************************************************************************/
+.LogoAnimation_logoContainer__qDdLl {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  pointer-events: none; display: flex; align-items: center;
+  justify-content: center; height: 72px; background: transparent;
+}
+.LogoAnimation_logoInner__GU_Rh {
+  display: flex; align-items: center; width: 100%; max-width: 100%;
+  padding: 0 32px;
+}
+.LogoAnimation_ruleLine__qzhmy { flex: 1; height: 1px; background: #000000; opacity: 0.75; }
+.LogoAnimation_svgWrapper__qlGfN { position: relative; flex-shrink: 0; padding: 0 8px; }
+.LogoAnimation_logoSvg__hrPAg { width: 48px; height: auto; display: block; }
+.LogoAnimation_taglineOverlay__l_P2Q {
+  position: absolute; top: 38%; left: 50%; transform: translateX(-50%);
+  padding: 3px 10px; white-space: nowrap; z-index: 10; pointer-events: none;
+}
+.LogoAnimation_taglineText__ZWDpk {
+  font-family: "Langdon", "Arial Black", sans-serif; font-size: 11px;
+  font-weight: 400; color: #000000; letter-spacing: 0.08em;
+  text-transform: uppercase; display: block;
+}
+
+/*!******************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[13].oneOf[7].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[13].oneOf[7].use[3]!./src/components/canvas/WorkingCanvas.module.css ***!
+  \******************************************************************************************************************************************************************************************************************************************************************************************/
+.WorkingCanvas_canvasWrapper__DymQ_ {
+  position: relative;
+  width: var(--canvas-w, 826.6655px);
+  height: 1450px;
+  /* 45° bottom-right blurred drop shadow using theme gradient colours */
+  filter:
+    drop-shadow(10px 10px 20px var(--shadow-c1, #000))
+    drop-shadow(5px 5px 10px var(--shadow-c2, #000))
+    drop-shadow(2px 2px 6px var(--shadow-c3, #000));
+  will-change: transform;
+  transform-origin: top left;
+  transition: filter 600ms cubic-bezier(0.16,1,0.3,1);
+}
+.WorkingCanvas_canvas___jPji {
+  position: relative; width: 100%; height: 100%;
+  background-color: #fff0cc; overflow: hidden;
+}
+
+/*!***************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[13].oneOf[7].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[13].oneOf[7].use[3]!./src/components/canvas/CanvasRows.module.css ***!
+  \***************************************************************************************************************************************************************************************************************************************************************************************/
+/* ── Base row ────────────────────────────────────────────────────────────────── */
+.CanvasRows_row__EJaP3 {
+  display: flex;
+  width: 100%;
+  height: 181.25px; /* var(--row-h) */
+  overflow: hidden;
+}
+.CanvasRows_row45__jJy5U { height: 362.5px; } /* double-height merged rows */
+
+/* ── Page variants ───────────────────────────────────────────────────────────── */
+/* Row widths controlled by parent WorkingCanvas width */
+
+/* ── Row 1 ───────────────────────────────────────────────────────────────────── */
+.CanvasRows_row1__T7Amx {
+  display: flex; align-items: stretch; justify-content: space-between;
+  border: 1px solid #1a1a1a; background: #fff0cc;
+  padding: 16px 24px;
+}
+.CanvasRows_row1Left__wflVc { display: flex; flex-direction: column; justify-content: center; gap: 6px; flex: 1; }
+.CanvasRows_row1Right__yEMRf { display: flex; flex-direction: column; justify-content: center; align-items: flex-end; gap: 4px; flex-shrink: 0; }
+.CanvasRows_studioName___SLYD { font-family: "Langdon", "Arial Black", sans-serif; font-size: 28px; font-weight: 400; text-transform: uppercase; color: #000; letter-spacing: 0.02em; display: block; }
+.CanvasRows_bio__Qpn1a { font-family: "Montserrat", sans-serif; font-size: 11px; font-weight: 400; color: #000; line-height: 1.5; max-width: 480px; }
+.CanvasRows_contact__qlqcP { font-family: "Montserrat", sans-serif; font-size: 13px; color: #000; text-decoration: none; display: block; text-align: right; }
+.CanvasRows_contact__qlqcP:hover { text-decoration: underline; }
+.CanvasRows_langToggle__4KN_D { display: flex; align-items: center; gap: 8px; margin-top: 4px; }
+.CanvasRows_langBtn__Vcftf { background: none; border: none; cursor: pointer; font-family: "Moon", "Montserrat", sans-serif; font-size: 16px; text-transform: uppercase; color: #000; opacity: 0.5; padding: 0; transition: opacity 0.2s; letter-spacing: 0.05em; }
+.CanvasRows_langBtn__Vcftf:hover, .CanvasRows_langActive__iIpUK { opacity: 1; }
+.CanvasRows_langDot__e09ta { font-size: 16px; color: #000; opacity: 0.5; }
+
+/* ── Row 2 ───────────────────────────────────────────────────────────────────── */
+.CanvasRows_row2__CYMYP { border-left: 1px solid #1a1a1a; border-right: 1px solid #1a1a1a; border-bottom: 1px solid #1a1a1a; background: #fff0cc; }
+.CanvasRows_row2__CYMYP .CanvasRows_cell__8sYss { flex: 1; border-right: 1px solid #1a1a1a; background: #fff0cc; }
+.CanvasRows_row2__CYMYP .CanvasRows_cell__8sYss:last-child { border-right: none; }
+
+/* ── Row 3 ───────────────────────────────────────────────────────────────────── */
+.CanvasRows_row3__db4eB { border-left: 1px solid #1a1a1a; border-right: 1px solid #1a1a1a; border-bottom: 1px solid #1a1a1a; background: #fff0cc; }
+.CanvasRows_row3Cell__3QJlI { flex: 1; border-right: 1px solid #1a1a1a; background: #fff0cc; display: flex; flex-direction: column; justify-content: flex-end; padding: 6px 4px; overflow: hidden; position: relative; }
+.CanvasRows_row3Cell__3QJlI:last-child { border-right: none; }
+.CanvasRows_row3Label__Kr2kw { display: flex; flex-direction: column; gap: 2px; }
+.CanvasRows_hexCode__mb9P2 { font-family: "Montserrat", sans-serif; font-size: 9px; color: #1a1a1a; writing-mode: vertical-rl; transform: rotate(180deg); white-space: nowrap; }
+.CanvasRows_colourName__4Dawk { font-family: "Montserrat", sans-serif; font-size: 8px; color: #1a1a1a; opacity: 0.7; writing-mode: vertical-rl; transform: rotate(180deg); white-space: nowrap; }
+
+/* ── Row 4+5 ─────────────────────────────────────────────────────────────────── */
+.CanvasRows_row45__jJy5U { position: relative; }
+.CanvasRows_row45Cell__41Hlj {
+  flex: 1; height: 100%; display: flex; align-items: flex-end;
+  padding: 12px 8px; transition: background-color 0.6s cubic-bezier(0.16,1,0.3,1);
+  cursor: default;
+}
+.CanvasRows_navCell___6V5o { cursor: pointer; }
+.CanvasRows_navCell___6V5o:hover { opacity: 0.88; }
+.CanvasRows_pageTitle__CF26l {
+  font-family: "Langdon", "Arial Black", sans-serif;
+  font-size: 13px; font-weight: 400; text-transform: uppercase;
+  color: #000; letter-spacing: 0.02em; line-height: 1.2;
+  writing-mode: vertical-rl; transform: rotate(180deg);
+}
+
+/* ── Row 6 ───────────────────────────────────────────────────────────────────── */
+.CanvasRows_row6__BTpel { } /* no border */
+.CanvasRows_solidCell__fDAS0 { flex: 1; height: 100%; transition: background-color 0.6s cubic-bezier(0.16,1,0.3,1); }
+
+/* ── Row 7 ───────────────────────────────────────────────────────────────────── */
+.CanvasRows_row7__P6pQl { }
+
+/* ── Row 8 ───────────────────────────────────────────────────────────────────── */
+.CanvasRows_row8__v2Mrn { }
+.CanvasRows_gradientBar__ZQinh { width: 100%; height: 100%; transition: background 0.8s cubic-bezier(0.16,1,0.3,1); }
+
+/*!****************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[13].oneOf[7].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[13].oneOf[7].use[3]!./src/components/theme/ColourPicker.module.css ***!
+  \****************************************************************************************************************************************************************************************************************************************************************************************/
+.ColourPicker_wrapper__dV8Mm { display: flex; flex-direction: column; gap: 6px; padding: 0 0 0 48px; -webkit-user-select: none; -moz-user-select: none; user-select: none; }
+.ColourPicker_label__HvD6U { font-family: "Moon","Montserrat",sans-serif; font-size: 18px; color: #000; letter-spacing: 0.02em; margin-bottom: 6px; }
+.ColourPicker_list__tGX_u { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 1px; }
+.ColourPicker_option__D2k63 { display: flex; align-items: center; gap: 10px; background: none; border: none; cursor: pointer; padding: 3px 0; font-family: "Moon","Montserrat",sans-serif; font-size: 16px; color: #000; letter-spacing: 0.02em; transition: opacity 0.2s; }
+.ColourPicker_option__D2k63:hover { opacity: 0.65; }
+.ColourPicker_swatch__YpK0t { display: inline-block; width: 26px; height: 20px; flex-shrink: 0; border: 1px solid rgba(0,0,0,0.18); }
+.ColourPicker_optLabel__w7gT4 { flex: 1; text-align: left; }
+.ColourPicker_dot__r45jm { font-size: 10px; color: #000; opacity: 0.7; }
+.ColourPicker_proceed__4MeZF { margin-top: 18px; background: none; border: 1px solid #000; cursor: pointer; padding: 8px 20px; font-family: "Langdon","Arial Black",sans-serif; font-size: 14px; color: #000; letter-spacing: 0.08em; text-transform: uppercase; align-self: flex-start; transition: background 0.2s, color 0.2s; }
+.ColourPicker_proceed__4MeZF:hover { background: #000; color: #fff0cc; }
+
+/*!*******************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[13].oneOf[7].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[13].oneOf[7].use[3]!./src/app/page.module.css ***!
+  \*******************************************************************************************************************************************************************************************************************************************************************/
+.page_pageRoot__Nu6hd { position: relative; width: 100vw; height: 100vh; overflow: hidden; background: #fff0cc; }
+
+/* Clips to viewport — canvas overflows are hidden */
+.page_viewport__o7i6C { position: absolute; inset: 0; overflow: hidden; }
+
+/* Horizontal strip holding landing + home canvas side by side */
+.page_panContainer__VUYJb {
+  display: flex; flex-direction: row; align-items: flex-start;
+  width: -moz-max-content;
+  width: max-content; height: 100%;
+  will-change: transform;
+}
+
+/* Each canvas scene: canvas + picker side by side */
+.page_canvasScene__X3mTE {
+  display: flex; flex-direction: row; align-items: flex-start;
+  flex-shrink: 0; height: 100%;
+}
+
+/* Scale wrapper — transforms canvas to fit viewport */
+.page_canvasScale__ga9Hu {
+  transform-origin: top left;
+  flex-shrink: 0;
+}
+
+/* Picker floats next to landing canvas */
+.page_pickerZone__U7Yzh {
+  display: flex; align-items: center; padding-left: 48px;
+  flex-shrink: 0; height: 100%;
+}
+

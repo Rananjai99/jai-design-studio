@@ -1,0 +1,16 @@
+FONT FILES REQUIRED — place these in this folder (/public/fonts/)
+-----------------------------------------------------------------
+1. Langdon.woff2
+2. Langdon.woff
+   → Used for: all headers, page titles, tagline ("LATITUDE OF HOME")
+   → Obtain from: https://www.dafont.com/langdon.font or your licensed copy
+
+3. Moon.woff2
+4. Moon.woff
+   → Used for: EN | HINDI language toggle, colour picker list
+   → Obtain from: https://www.dafont.com/moon-2-0.font or your licensed copy
+
+Montserrat is loaded via Google Fonts in globals.css — no file needed.
+
+Without these files the site will fall back to system sans-serif fonts.
+The layout will still work, only the custom typography will differ.

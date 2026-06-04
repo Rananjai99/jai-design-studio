@@ -1,0 +1,17 @@
+.canvasWrapper {
+  position: relative;
+  width: var(--canvas-w, 826.6655px);
+  height: 1450px;
+  /* 45° bottom-right blurred drop shadow using theme gradient colours */
+  filter:
+    drop-shadow(10px 10px 20px var(--shadow-c1, #000))
+    drop-shadow(5px 5px 10px var(--shadow-c2, #000))
+    drop-shadow(2px 2px 6px var(--shadow-c3, #000));
+  will-change: transform;
+  transform-origin: top left;
+  transition: filter 600ms cubic-bezier(0.16,1,0.3,1);
+}
+.canvas {
+  position: relative; width: 100%; height: 100%;
+  background-color: #fff0cc; overflow: hidden;
+}

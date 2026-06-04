@@ -1,0 +1,21 @@
+.logoContainer {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  pointer-events: none; display: flex; align-items: center;
+  justify-content: center; height: 72px; background: transparent;
+}
+.logoInner {
+  display: flex; align-items: center; width: 100%; max-width: 100%;
+  padding: 0 32px;
+}
+.ruleLine { flex: 1; height: 1px; background: #000000; opacity: 0.75; }
+.svgWrapper { position: relative; flex-shrink: 0; padding: 0 8px; }
+.logoSvg { width: 48px; height: auto; display: block; }
+.taglineOverlay {
+  position: absolute; top: 38%; left: 50%; transform: translateX(-50%);
+  padding: 3px 10px; white-space: nowrap; z-index: 10; pointer-events: none;
+}
+.taglineText {
+  font-family: "Langdon", "Arial Black", sans-serif; font-size: 11px;
+  font-weight: 400; color: #000000; letter-spacing: 0.08em;
+  text-transform: uppercase; display: block;
+}

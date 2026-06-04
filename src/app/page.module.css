@@ -1,0 +1,29 @@
+.pageRoot { position: relative; width: 100vw; height: 100vh; overflow: hidden; background: #fff0cc; }
+
+/* Clips to viewport — canvas overflows are hidden */
+.viewport { position: absolute; inset: 0; overflow: hidden; }
+
+/* Horizontal strip holding landing + home canvas side by side */
+.panContainer {
+  display: flex; flex-direction: row; align-items: flex-start;
+  width: max-content; height: 100%;
+  will-change: transform;
+}
+
+/* Each canvas scene: canvas + picker side by side */
+.canvasScene {
+  display: flex; flex-direction: row; align-items: flex-start;
+  flex-shrink: 0; height: 100%;
+}
+
+/* Scale wrapper — transforms canvas to fit viewport */
+.canvasScale {
+  transform-origin: top left;
+  flex-shrink: 0;
+}
+
+/* Picker floats next to landing canvas */
+.pickerZone {
+  display: flex; align-items: center; padding-left: 48px;
+  flex-shrink: 0; height: 100%;
+}

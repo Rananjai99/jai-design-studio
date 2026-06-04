@@ -1,0 +1,47 @@
+/*!********************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[13].oneOf[12].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[13].oneOf[12].use[3]!./src/styles/globals.css ***!
+  \********************************************************************************************************************************************************************************************************************************************************************/
+@font-face {
+  font-family: "Langdon";
+  src: url("/fonts/Langdon.woff2") format("woff2"), url("/fonts/Langdon.woff") format("woff");
+  font-weight: 400; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: "Moon";
+  src: url("/fonts/Moon.woff2") format("woff2"), url("/fonts/Moon.woff") format("woff");
+  font-weight: 400; font-style: normal; font-display: swap;
+}
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500&display=swap');
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-size: 16px; -webkit-font-smoothing: antialiased; }
+body { background-color: #fff0cc; color: #000000; overflow-x: hidden; }
+
+:root {
+  --canvas-base: #fff0cc;
+  --canvas-border: #1a1a1a;
+  --canvas-landing-w: 826.6655px;
+  --canvas-home-w: 2480px;
+  --canvas-h: 1450px;
+  --row-h: 181.25px;
+  /* Theme vars injected dynamically by ThemeContext */
+  --theme-row45-col1: #ffc300; --theme-row45-col2: #ffca42;
+  --theme-row45-col3: #ff44a1; --theme-row45-col4: #ff5eaa;
+  --theme-row45-col5: #ff0073; --theme-row45-col6: #ff0009;
+  --theme-row45-col7: #fff0cc; --theme-row45-col8: #fff0cc;
+  --theme-row45-col9: #fff0cc; --theme-row45-col10: #fff0cc;
+  --theme-row45-col11: #fff0cc; --theme-row45-col12: #fff0cc;
+  --theme-row8-gradient: linear-gradient(to right, #ffc300, #ff44a1, #ff0009);
+  --theme-shadow-colour: #ffc300;
+  --theme-shadow-mid: #ff44a1;
+  --theme-base-hex: #ffc300;
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --transition-theme: 600ms;
+}
+
+.langdon { font-family: "Langdon", "Arial Black", sans-serif; text-transform: uppercase; }
+.moon { font-family: "Moon", "Montserrat", sans-serif; text-transform: uppercase; }
+.montserrat { font-family: "Montserrat", "Arial", sans-serif; }
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border-width: 0; }
+*:focus-visible { outline: 2px solid #000; outline-offset: 2px; }
+

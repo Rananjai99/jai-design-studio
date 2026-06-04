@@ -1,0 +1,28 @@
+{
+  "name": "jai-design-studio",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "framer-motion": "^11.18.2",
+    "gsap": "^3.15.0",
+    "next": "14.2.5",
+    "next-intl": "^3.26.5",
+    "react": "^18",
+    "react-dom": "^18"
+  },
+  "devDependencies": {
+    "@types/node": "^20.19.41",
+    "@types/react": "^18.3.30",
+    "@types/react-dom": "^18.3.7",
+    "autoprefixer": "^10.5.0",
+    "postcss": "^8.5.15",
+    "tailwindcss": "^3.4.19",
+    "typescript": "^5.9.3"
+  }
+}

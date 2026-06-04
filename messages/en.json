@@ -1,0 +1,31 @@
+{
+  "site": {
+    "name": "JAI DESIGN STUDIO",
+    "tagline": "LATITUDE OF HOME",
+    "bio": "Holistic design spanning architecture, urbanism, interiors, and craft. Calibrated precisely to our roots—the latitude of home. Where precision is a function of place, and perspective is fluid. We make the familiar new and the new familiar.",
+    "email": "architects.jai@gmail.com",
+    "phone": "+1-224-829-5822"
+  },
+  "nav": {
+    "about": "ABOUT US",
+    "timeline": "COMPANY TIMELINE",
+    "urbanDesign": "URBAN DESIGN",
+    "architectureInteriors": "ARCHITECTURE & INTERIORS",
+    "industrialDesign": "INDUSTRIAL DESIGN",
+    "furnitureDesign": "FURNITURE DESIGN",
+    "photography": "PHOTOGRAPHY",
+    "graphicDesign": "GRAPHIC DESIGN",
+    "apparelDesign": "APPAREL DESIGN"
+  },
+  "ui": {
+    "chooseColour": "CHOOSE A COLOUR:",
+    "enter": "ENTER",
+    "english": "ENGLISH",
+    "hindi": "HINDI",
+    "colours": {
+      "red": "RED", "pink": "PINK", "blue": "BLUE", "white": "WHITE",
+      "black": "BLACK", "green": "GREEN", "purple": "PURPLE",
+      "yellow": "YELLOW", "orange": "ORANGE", "default": "DEFAULT"
+    }
+  }
+}
