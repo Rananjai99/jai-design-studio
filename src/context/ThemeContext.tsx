@@ -6,6 +6,7 @@ interface ThemeContextValue {
   themeId: ThemeId;
   theme: ColourTheme;
   selectTheme: (id: ThemeId) => void;
+  previewTheme: (id: ThemeId | null) => void;
   resetTheme: () => void;
   hasExplicitChoice: boolean;
   isOnLanding: boolean;
@@ -46,6 +47,7 @@ const EXPLICIT_KEY = "jai-theme-explicit";
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
   const [themeId, setThemeId] = useState<ThemeId>(DEFAULT_THEME_ID);
+  const [previewId, setPreviewId] = useState<ThemeId | null>(null);
   const [hasExplicitChoice, setHasExplicitChoice] = useState(false);
   const [isOnLanding, setIsOnLanding] = useState(true);
 
@@ -65,21 +67,28 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     }
   }, []);
 
-  const theme = useMemo(() => themes[themeId], [themeId]);
+  // Hovering a colour previews it without committing; the effective theme drives
+  // all canvas rendering (CSS vars + the `theme` object the rows read).
+  const effectiveId = previewId ?? themeId;
+  const theme = useMemo(() => themes[effectiveId], [effectiveId]);
 
   useEffect(() => {
     injectThemeCSSVars(theme);
-    document.documentElement.setAttribute("data-theme", themeId);
-  }, [theme, themeId]);
+    document.documentElement.setAttribute("data-theme", effectiveId);
+  }, [theme, effectiveId]);
 
   const selectTheme = useCallback((id: ThemeId) => {
     setThemeId(id);
+    setPreviewId(null); // clicking commits — drop any hover preview
     setHasExplicitChoice(true);
     try { localStorage.setItem(STORAGE_KEY, id); localStorage.setItem(EXPLICIT_KEY, "true"); } catch {}
   }, []);
 
+  const previewTheme = useCallback((id: ThemeId | null) => setPreviewId(id), []);
+
   const resetTheme = useCallback(() => {
     setThemeId(DEFAULT_THEME_ID);
+    setPreviewId(null);
     setHasExplicitChoice(false);
     try { localStorage.removeItem(STORAGE_KEY); localStorage.removeItem(EXPLICIT_KEY); } catch {}
   }, []);
@@ -88,7 +97,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
   const navigateToLanding = useCallback(() => setIsOnLanding(true), []);
 
   return (
-    <ThemeContext.Provider value={{ themeId, theme, selectTheme, resetTheme, hasExplicitChoice, isOnLanding, navigateToHome, navigateToLanding }}>
+    <ThemeContext.Provider value={{ themeId, theme, selectTheme, previewTheme, resetTheme, hasExplicitChoice, isOnLanding, navigateToHome, navigateToLanding }}>
       {children}
     </ThemeContext.Provider>
   );

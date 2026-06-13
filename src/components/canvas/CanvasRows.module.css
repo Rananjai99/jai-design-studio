@@ -1,4 +1,7 @@
 /* ── Base row ────────────────────────────────────────────────────────────────── */
+/* Hairline width counter-scaled by the canvas transform so 1px borders stay
+   crisp (and don't drop out) when the whole canvas is scaled down to fit. */
+.row { --bw: calc(2px / var(--canvas-scale, 1)); }
 .row {
   display: flex;
   width: 100%;
@@ -13,35 +16,59 @@
 /* ── Row 1 ───────────────────────────────────────────────────────────────────── */
 .row1 {
   display: flex; align-items: stretch; justify-content: space-between;
-  border: 1px solid #1a1a1a; background: #fff0cc;
+  border: var(--bw) solid #1a1a1a; background: #fff0cc;
   padding: 16px 24px;
 }
-.row1Left { display: flex; flex-direction: column; justify-content: center; gap: 6px; flex: 1; }
+.row1Left { display: flex; flex-direction: column; justify-content: center; gap: 28px; flex: 1; }
 .row1Right { display: flex; flex-direction: column; justify-content: center; align-items: flex-end; gap: 4px; flex-shrink: 0; }
-.studioName { font-family: "Langdon", "Arial Black", sans-serif; font-size: 28px; font-weight: 400; text-transform: uppercase; color: #000; letter-spacing: 0.02em; display: block; }
+.studioName { font-family: "Langdon", "Arial Black", sans-serif; font-size: 56px; font-weight: 400; text-transform: uppercase; color: #000; letter-spacing: 0.02em; display: block; }
 .bio { font-family: "Montserrat", sans-serif; font-size: 11px; font-weight: 400; color: #000; line-height: 1.5; max-width: 480px; }
 .contact { font-family: "Montserrat", sans-serif; font-size: 13px; color: #000; text-decoration: none; display: block; text-align: right; }
 .contact:hover { text-decoration: underline; }
-.langToggle { display: flex; align-items: center; gap: 8px; margin-top: 4px; }
-.langBtn { background: none; border: none; cursor: pointer; font-family: "Moon", "Montserrat", sans-serif; font-size: 16px; text-transform: uppercase; color: #000; opacity: 0.5; padding: 0; transition: opacity 0.2s; letter-spacing: 0.05em; }
+.langToggle { display: flex; align-items: center; justify-content: center; gap: 8px; margin-top: 4px; }
+.langBtn { background: none; border: none; cursor: pointer; font-family: "Moon", "Montserrat", sans-serif; font-size: 30px; text-transform: uppercase; color: #000; opacity: 0.5; padding: 0; transition: opacity 0.2s; letter-spacing: 0.05em; }
 .langBtn:hover, .langActive { opacity: 1; }
-.langDot { font-size: 16px; color: #000; opacity: 0.5; }
+.langDot { font-size: 30px; color: #000; opacity: 0.5; }
+
+/* ── Rows 2 & 3 share one track grid so their dividers align exactly ─────────────
+   Row 2 = N base columns; Row 3 cells each span 2 base columns (2:1 ratio).
+   Using grid (not flex) keeps the column edges identical across both rows even
+   at fractional canvas widths. */
+.row2, .row3 { display: grid; }
+.row2.landing, .row3.landing { grid-template-columns: repeat(16, 1fr); }
+.row2.home,    .row3.home    { grid-template-columns: repeat(48, 1fr); }
 
 /* ── Row 2 ───────────────────────────────────────────────────────────────────── */
-.row2 { border-left: 1px solid #1a1a1a; border-right: 1px solid #1a1a1a; border-bottom: 1px solid #1a1a1a; background: #fff0cc; }
-.row2 .cell { flex: 1; border-right: 1px solid #1a1a1a; background: #fff0cc; }
+.row2 { border-left: var(--bw) solid #1a1a1a; border-right: var(--bw) solid #1a1a1a; border-bottom: var(--bw) solid #1a1a1a; background: #fff0cc; }
+.row2 .cell { border-right: var(--bw) solid #1a1a1a; background: #fff0cc; }
 .row2 .cell:last-child { border-right: none; }
 
 /* ── Row 3 ───────────────────────────────────────────────────────────────────── */
-.row3 { border-left: 1px solid #1a1a1a; border-right: 1px solid #1a1a1a; border-bottom: 1px solid #1a1a1a; background: #fff0cc; }
-.row3Cell { flex: 1; border-right: 1px solid #1a1a1a; background: #fff0cc; display: flex; flex-direction: column; justify-content: flex-end; padding: 6px 4px; overflow: hidden; position: relative; }
+/* Bottom border lives on the individual cells (not the row) so the merged cell
+   can opt out — keeping the merged block seamless with the open block below it. */
+.row3 { border-left: var(--bw) solid #1a1a1a; border-right: var(--bw) solid #1a1a1a; background: #fff0cc; }
+.row3Cell { border-right: var(--bw) solid #1a1a1a; border-bottom: var(--bw) solid #1a1a1a; background: #fff0cc; display: flex; flex-direction: column; justify-content: flex-end; padding: 6px 4px; overflow: hidden; position: relative; }
 .row3Cell:last-child { border-right: none; }
+/* Merged cell — spans several columns, no internal dividers (it is one cell).
+   No bottom border so it joins the open block below with no dividing line. */
+.mergedCell { }
+.row3Cell.mergedCell { border-bottom: none; }
 .row3Label { display: flex; flex-direction: column; gap: 2px; }
-.hexCode { font-family: "Montserrat", sans-serif; font-size: 9px; color: #1a1a1a; writing-mode: vertical-rl; transform: rotate(180deg); white-space: nowrap; }
-.colourName { font-family: "Montserrat", sans-serif; font-size: 8px; color: #1a1a1a; opacity: 0.7; writing-mode: vertical-rl; transform: rotate(180deg); white-space: nowrap; }
+/* Vertical labels wrap into a second column when a name is too long to fit the
+   cell height. In vertical writing mode, max-height caps how long one vertical
+   line can be, so longer text breaks into an adjacent column instead of
+   overflowing/clipping. (Row content height ≈ 181.25 − 12px padding ≈ 169px.) */
+.hexCode { font-family: "Montserrat", sans-serif; font-size: 18px; color: #1a1a1a; opacity: 0.7; writing-mode: vertical-rl; transform: rotate(180deg); white-space: normal; max-height: 169px; overflow-wrap: break-word; }
+.colourName { font-family: "Montserrat", sans-serif; font-size: 18px; color: #1a1a1a; opacity: 0.7; writing-mode: vertical-rl; transform: rotate(180deg); white-space: normal; max-height: 169px; overflow-wrap: break-word; }
 
 /* ── Row 4+5 ─────────────────────────────────────────────────────────────────── */
 .row45 { position: relative; }
+/* Landing uses a fixed 4-track grid (not flex) so its column edges land exactly
+   on the same 25%/50% lines as Rows 3 & 6 — flex + cell padding would skew them. */
+.row45.landing { display: grid; grid-template-columns: repeat(4, 1fr); }
+/* Home shares the 48-track base (12 cols = 4 tracks each) so every divider lands
+   on the same pixel as Rows 2 & 3 — flexbox rounding would drift the edges. */
+.row45.home { display: grid; grid-template-columns: repeat(12, 1fr); }
 .row45Cell {
   flex: 1; height: 100%; display: flex; align-items: flex-end;
   padding: 12px 8px; transition: background-color 0.6s cubic-bezier(0.16,1,0.3,1);
@@ -49,6 +76,15 @@
 }
 .navCell { cursor: pointer; }
 .navCell:hover { opacity: 0.88; }
+/* Logo/tagline cell (home Row 4+5, cols 3–5) — logo overlay sits left, the
+   vertical tagline is pushed to the right (the col-5 area). */
+.taglineCell { align-items: center; justify-content: flex-end; }
+.tagline {
+  font-family: "Langdon", "Arial Black", sans-serif;
+  font-size: 13px; font-weight: 400; text-transform: uppercase;
+  color: #000; letter-spacing: 0.06em; white-space: nowrap;
+  writing-mode: vertical-rl; transform: rotate(180deg);
+}
 .pageTitle {
   font-family: "Langdon", "Arial Black", sans-serif;
   font-size: 13px; font-weight: 400; text-transform: uppercase;
@@ -58,10 +94,31 @@
 
 /* ── Row 6 ───────────────────────────────────────────────────────────────────── */
 .row6 { } /* no border */
+/* Landing uses a fixed 8-track grid so cell edges (and the merged block's left
+   border) align exactly with Rows 3 & 4+5 — flex would skew them under borders. */
+.row6.landing { display: grid; grid-template-columns: repeat(8, 1fr); }
+/* Home grid (24 cols = 2 tracks each of the 48-track base) so dividers align. */
+.row6.home { display: grid; grid-template-columns: repeat(24, 1fr); }
 .solidCell { flex: 1; height: 100%; transition: background-color 0.6s cubic-bezier(0.16,1,0.3,1); }
+
+/* ── Merged right-side block (landing) ──────────────────────────────────────────
+   Row 3 + Row 4+5 + Row 6 merged cells stack into one open block on the right.
+   Border it on all 4 sides: the top edge is Row 2's bottom border, Row 3's row
+   border-right closes the top-right, the merged cells supply the right edge and
+   the bottom, and the LEFT edge is drawn with border-right on the cell to the
+   left of each merged cell. Using border-right (not the merged cell's
+   border-left) puts the line on the same side of the 50% mark as Row 2's column
+   dividers, so the whole vertical aligns through rows 2–6 with no jog.
+   (Row 3's label cell already carries border-right by default.) */
+.row45.landing .row45Cell:nth-last-child(2) { border-right: var(--bw) solid #1a1a1a; }
+.row6.landing  .solidCell:nth-last-child(2)  { border-right: var(--bw) solid #1a1a1a; }
+.row45.landing .mergedCell { border-right: var(--bw) solid #1a1a1a; }
+.row6.landing  .mergedCell { border-right: var(--bw) solid #1a1a1a; border-bottom: var(--bw) solid #1a1a1a; }
 
 /* ── Row 7 ───────────────────────────────────────────────────────────────────── */
 .row7 { }
+/* Home grid (48 tracks, one per cell) so dividers align with Rows 2 & 3. */
+.row7.home { display: grid; grid-template-columns: repeat(48, 1fr); }
 
 /* ── Row 8 ───────────────────────────────────────────────────────────────────── */
 .row8 { }

@@ -8,7 +8,7 @@ import styles from "./CanvasRows.module.css";
 
 export function CanvasRow8({ page }: { page: CanvasPage }) {
   const { theme } = useTheme();
-  const stops = theme.row8Gradient;
+  const stops = page === "home" ? (theme.home?.row8Gradient ?? theme.row8Gradient) : theme.row8Gradient;
   const gradientCSS = `linear-gradient(to right, ${stops.join(", ")})`;
 
   return (

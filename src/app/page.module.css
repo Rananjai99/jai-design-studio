@@ -1,29 +1,36 @@
 .pageRoot { position: relative; width: 100vw; height: 100vh; overflow: hidden; background: #fff0cc; }
 
-/* Clips to viewport — canvas overflows are hidden */
+/* Clips to viewport — canvas overflows (home extending off the right) are hidden */
 .viewport { position: absolute; inset: 0; overflow: hidden; }
 
-/* Horizontal strip holding landing + home canvas side by side */
-.panContainer {
-  display: flex; flex-direction: row; align-items: flex-start;
-  width: max-content; height: 100%;
-  will-change: transform;
-}
-
-/* Each canvas scene: canvas + picker side by side */
-.canvasScene {
-  display: flex; flex-direction: row; align-items: flex-start;
-  flex-shrink: 0; height: 100%;
-}
-
-/* Scale wrapper — transforms canvas to fit viewport */
-.canvasScale {
+/* Stage — GSAP transforms this to frame either canvas. Origin is top-left so the
+   landing and home canvases can share a left edge. */
+.stage {
+  position: absolute;
+  top: 0; left: 0;
   transform-origin: top left;
-  flex-shrink: 0;
+  will-change: transform;
+  /* Above the picker so the picker can slide out from *under* the canvas. */
+  z-index: 2;
+  /* Hidden until GSAP applies the framing transform (see useCanvasPan), so the
+     un-transformed full-size SSR paint never flashes. Fades in once framed. */
+  opacity: 0;
+  transition: opacity 250ms ease;
 }
 
-/* Picker floats next to landing canvas */
+/* Both canvases stack at the same origin; only their width differs. */
+.canvasLayer {
+  position: absolute;
+  top: 0; left: 0;
+  transition: opacity 600ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Colour picker — positioned in screen space to the right of the landing box. */
 .pickerZone {
-  display: flex; align-items: center; padding-left: 48px;
-  flex-shrink: 0; height: 100%;
+  position: absolute;
+  top: 0; bottom: 0;
+  display: flex; align-items: flex-start;
+  transition: opacity 500ms cubic-bezier(0.16, 1, 0.3, 1);
+  /* Below the canvas so it appears to emerge from under it. */
+  z-index: 1;
 }

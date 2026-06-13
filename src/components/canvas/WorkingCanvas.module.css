@@ -2,11 +2,13 @@
   position: relative;
   width: var(--canvas-w, 826.6655px);
   height: 1450px;
-  /* 45° bottom-right blurred drop shadow using theme gradient colours */
+  /* 45° bottom-right drop shadow using theme gradient colours.
+     Each offset is >= its blur radius so the shadow never bleeds past the top
+     or left edges — it stays only on the bottom and right sides. */
   filter:
-    drop-shadow(10px 10px 20px var(--shadow-c1, #000))
-    drop-shadow(5px 5px 10px var(--shadow-c2, #000))
-    drop-shadow(2px 2px 6px var(--shadow-c3, #000));
+    drop-shadow(15.4px 15.4px 12.6px var(--shadow-c1, #000))
+    drop-shadow(8.4px 8.4px 6.3px var(--shadow-c2, #000))
+    drop-shadow(3.5px 3.5px 2.8px var(--shadow-c3, #000));
   will-change: transform;
   transform-origin: top left;
   transition: filter 600ms cubic-bezier(0.16,1,0.3,1);

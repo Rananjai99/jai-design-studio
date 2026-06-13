@@ -1,0 +1,23 @@
+/* Logo sits inside the big merged rectangle (right half, rows 3–6 of the canvas).
+   Block bounds: left 50%, top 25%, width 50%, height 50% of the canvas.
+   overflow:hidden so the letters are masked as they fly in from the edges. */
+.logoZone {
+  position: absolute;
+  left: 50%;
+  top: 25%;
+  width: 50%;
+  height: 50%;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+/* svg overflow visible so a flying letter is clipped by the rectangle (.logoZone),
+   not by the svg's own — they appear to emerge from the rectangle's edges. */
+.logoSvg {
+  height: 90%;
+  width: auto;
+  overflow: visible;
+  display: block;
+}
