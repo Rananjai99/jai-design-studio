@@ -53,9 +53,10 @@ interface WorkingCanvasProps {
 export const WorkingCanvas = forwardRef<HTMLDivElement, WorkingCanvasProps>(
   function WorkingCanvas({ page, children, scale = 1, width, logoLeft, logoWidth, floatX, floatY, className, style }, ref) {
     const { theme } = useTheme();
-    const sc1 = theme.shadowColours[0] ?? "#000";
-    const sc2 = theme.shadowColours[Math.floor(theme.shadowColours.length / 2)] ?? sc1;
-    const sc3 = theme.shadowColours[theme.shadowColours.length - 1] ?? sc2;
+    // Drop shadow is tinted with Row 8's left→right gradient (same stops/logic as
+    // CanvasRow8), so the shadow's right edge matches the gradient's rightmost stop.
+    const row8Stops = page === "home" ? (theme.home?.row8Gradient ?? theme.row8Gradient) : theme.row8Gradient;
+    const shadowGradient = `linear-gradient(to right, ${row8Stops.join(", ")})`;
 
     // Subtle floating parallax: the whole canvas (and its drop shadow) drifts a
     // few px opposite to the cursor's offset from the canvas centre. When a
@@ -77,7 +78,7 @@ export const WorkingCanvas = forwardRef<HTMLDivElement, WorkingCanvasProps>(
         className={[styles.canvasWrapper, className].filter(Boolean).join(" ")}
         data-page={page}
         style={{
-          "--shadow-c1": sc1, "--shadow-c2": sc2, "--shadow-c3": sc3,
+          "--shadow-gradient": shadowGradient,
           "--canvas-w": width != null
             ? `${width}px`
             : page === "landing" ? `${CANVAS.LANDING_WIDTH}px` : `${CANVAS.HOME_WIDTH}px`,
@@ -86,6 +87,13 @@ export const WorkingCanvas = forwardRef<HTMLDivElement, WorkingCanvasProps>(
           ...style,
         } as Record<string, unknown>}
       >
+        {/* Drop shadow. Two layers so the clip runs BEFORE the blur: the inner
+            shape is hard-clipped (gap at the top-right & bottom-left), then the
+            outer layer blurs + grains it via #shadowGrain — softening the clip
+            edges so the gap blends instead of showing a hard line. */}
+        <div className={styles.shadow} aria-hidden="true">
+          <div className={styles.shadowShape} />
+        </div>
         <div className={styles.canvas}>
           {children}
           {/* Logo lives inside the big merged rectangle (right-half on landing,

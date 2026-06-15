@@ -42,6 +42,12 @@
 .row2 { border-left: var(--bw) solid #1a1a1a; border-right: var(--bw) solid #1a1a1a; border-bottom: var(--bw) solid #1a1a1a; background: #fff0cc; }
 .row2 .cell { border-right: var(--bw) solid #1a1a1a; background: #fff0cc; }
 .row2 .cell:last-child { border-right: none; }
+/* Home: pseudo-element trick — side + bottom lines don't offset the 48-track grid or
+   compress the cells' content area (border-box would shrink cells by bw). ::before
+   draws both left and right as border edges; ::after draws the bottom bar. */
+.row2.home { border-left: none; border-right: none; border-bottom: none; position: relative; }
+.row2.home::before { content: ''; position: absolute; inset: 0; border-left: var(--bw) solid #1a1a1a; border-right: var(--bw) solid #1a1a1a; z-index: 1; pointer-events: none; }
+.row2.home::after  { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: var(--bw); background-color: #1a1a1a; z-index: 1; pointer-events: none; }
 
 /* ── Row 3 ───────────────────────────────────────────────────────────────────── */
 /* Bottom border lives on the individual cells (not the row) so the merged cell
@@ -49,6 +55,11 @@
 .row3 { border-left: var(--bw) solid #1a1a1a; border-right: var(--bw) solid #1a1a1a; background: #fff0cc; }
 .row3Cell { border-right: var(--bw) solid #1a1a1a; border-bottom: var(--bw) solid #1a1a1a; background: #fff0cc; display: flex; flex-direction: column; justify-content: flex-end; padding: 6px 4px; overflow: hidden; position: relative; }
 .row3Cell:last-child { border-right: none; }
+/* Home: remove actual border-left/right so the 48-track grid is NOT offset vs
+   Row 4+5 (12-col) and Row 6 (24-col). Visual side lines come from ::before/::after. */
+.row3.home { border-left: none; border-right: none; position: relative; }
+.row3.home::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: var(--bw); background-color: #1a1a1a; z-index: 1; pointer-events: none; }
+.row3.home::after  { content: ''; position: absolute; right: 0; top: 0; bottom: 0; width: var(--bw); background-color: #1a1a1a; z-index: 1; pointer-events: none; }
 /* Merged cell — spans several columns, no internal dividers (it is one cell).
    No bottom border so it joins the open block below with no dividing line. */
 .mergedCell { }
@@ -69,6 +80,8 @@
 /* Home shares the 48-track base (12 cols = 4 tracks each) so every divider lands
    on the same pixel as Rows 2 & 3 — flexbox rounding would drift the edges. */
 .row45.home { display: grid; grid-template-columns: repeat(12, 1fr); }
+/* Home logo zone left edge: border-right on col 2 aligns with Row 3's cell-4 border-right. */
+.row45.home .row45Cell:nth-child(2) { border-right: var(--bw) solid #1a1a1a; }
 .row45Cell {
   flex: 1; height: 100%; display: flex; align-items: flex-end;
   padding: 12px 8px; transition: background-color 0.6s cubic-bezier(0.16,1,0.3,1);
@@ -100,6 +113,10 @@
 /* Home grid (24 cols = 2 tracks each of the 48-track base) so dividers align. */
 .row6.home { display: grid; grid-template-columns: repeat(24, 1fr); }
 .solidCell { flex: 1; height: 100%; transition: background-color 0.6s cubic-bezier(0.16,1,0.3,1); }
+/* Home logo zone: left edge (border-right on cell 4), bottom (cells 5–8), right (cell 8). */
+.row6.home .solidCell:nth-child(4) { border-right: var(--bw) solid #1a1a1a; }
+.row6.home .solidCell:nth-child(n+5):nth-child(-n+8) { border-bottom: var(--bw) solid #1a1a1a; }
+.row6.home .solidCell:nth-child(8) { border-right: var(--bw) solid #1a1a1a; }
 
 /* ── Merged right-side block (landing) ──────────────────────────────────────────
    Row 3 + Row 4+5 + Row 6 merged cells stack into one open block on the right.

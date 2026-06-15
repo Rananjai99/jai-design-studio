@@ -79,7 +79,7 @@ export function CanvasRow45({ page, cols }: CanvasRow45Props) {
         const merged = seg.span > 1;
         // Pre-block cols keep their index; post-block cols shift back by 2.
         const idx = seg.start < 2 ? seg.start : seg.start - 2;
-        const colour = merged ? theme.baseHex : (palette[idx] ?? "#fff0cc");
+        const colour = merged ? (palette[2] ?? theme.baseHex) : (palette[idx] ?? "#fff0cc");
         return (
           <motion.div
             key={seg.start}

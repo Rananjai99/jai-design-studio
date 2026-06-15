@@ -2,16 +2,36 @@
   position: relative;
   width: var(--canvas-w, 826.6655px);
   height: 1450px;
-  /* 45° bottom-right drop shadow using theme gradient colours.
-     Each offset is >= its blur radius so the shadow never bleeds past the top
-     or left edges — it stays only on the bottom and right sides. */
-  filter:
-    drop-shadow(15.4px 15.4px 12.6px var(--shadow-c1, #000))
-    drop-shadow(8.4px 8.4px 6.3px var(--shadow-c2, #000))
-    drop-shadow(3.5px 3.5px 2.8px var(--shadow-c3, #000));
   will-change: transform;
   transform-origin: top left;
-  transition: filter 600ms cubic-bezier(0.16,1,0.3,1);
+}
+/* 45° bottom-right drop shadow tinted with Row 8's left→right gradient, sitting
+   BEHIND the opaque canvas so only its bottom & right spill is visible.
+   Split into two layers so the clip runs BEFORE the blur (a single element always
+   filters first, then clips — which leaves a hard cut). .shadowShape is the
+   hard-clipped gradient; .shadow then blurs + grains it via #shadowGrain, so the
+   clip edges soften and the gap blends in. */
+.shadow {
+  position: absolute;
+  inset: 0;
+  filter: url(#shadowGrain);
+  pointer-events: none;
+}
+/* The gradient rectangle: darkened with a translucent black layer (keeps Row 8's
+   hues), nudged equally down & right (45°), then clipped. clip-path is measured in
+   the PRE-transform box and the shape is translated +18px, so a canvas-space
+   boundary at Npx = an inset of (N − 18)px. Top/left insets of 7px cut 25px in
+   from the canvas top & left edges, giving the gap before the right arm (down from
+   the top-right corner) and the bottom arm (right of the bottom-left corner); the
+   outer blur then feathers that cut. Negative right/bottom insets let it spill. */
+.shadowShape {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+    var(--shadow-gradient, #000);
+  transform: translate(18px, 18px);
+  clip-path: inset(7px -60px -60px 7px);
 }
 .canvas {
   position: relative; width: 100%; height: 100%;
