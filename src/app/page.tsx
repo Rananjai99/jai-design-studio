@@ -63,7 +63,14 @@ export default function RootPage() {
   // Home shares the landing's scale + top-left origin (so the landing rectangle
   // is identical), and is widened to the right so its RIGHT margin equals the
   // landing's LEFT margin (OFFSET). Its width is therefore dynamic.
-  const homeWidth = Math.max(CANVAS.LANDING_WIDTH, (vp.w - 2 * OFFSET) / sL);
+  // The landing keeps its fixed design width; the home canvas is exactly 3× that
+  // (so home's first 16 of 48 columns == the landing's 16), and the two grids line
+  // up column-for-column (Row 2: 16↔48, Row 3: 8↔24, Row 4+5: 4↔12, Row 6: 8↔24,
+  // Row 7: 16↔48) — the pages overlay perfectly, with home extending past the
+  // landing's right edge. Home no longer stretches to fill the viewport width, so
+  // it is narrower than before on wide screens.
+  const landingWidth = CANVAS.LANDING_WIDTH;
+  const homeWidth = 3 * landingWidth;
   // Fixed home grid — a true 3× extension of the landing's 16-track grid:
   // Row 2 = 48, Row 3 = 24, Row 4+5 = 12, Row 6 = 24, Row 7 = 48. Hardcoded
   // (not viewport-derived) so the counts never drift on wide/narrow screens.
@@ -78,7 +85,7 @@ export default function RootPage() {
   const homeCam = { x: OFFSET, y: OFFSET, scale: sL };
 
   // Picker sits one margin-width to the right of the landing box's right edge.
-  const pickerLeft = OFFSET + CANVAS.LANDING_WIDTH * sL + OFFSET;
+  const pickerLeft = OFFSET + landingWidth * sL + OFFSET;
 
   const { panRef, triggerPan } = useCanvasPan(landingCam, homeCam);
 
@@ -100,7 +107,7 @@ export default function RootPage() {
             className={styles.canvasLayer}
             style={{ opacity: isOnLanding ? 1 : 0, pointerEvents: isOnLanding ? "auto" : "none" }}
           >
-            <WorkingCanvas ref={floatAnchorRef} page="landing" scale={sL} floatX={floatX} floatY={floatY}>
+            <WorkingCanvas ref={floatAnchorRef} page="landing" scale={sL} width={landingWidth} floatX={floatX} floatY={floatY}>
               <CanvasRow1 page="landing" language={language} onLanguageToggle={() => setLanguage(l => l === "en" ? "hi" : "en")} />
               <CanvasRow2 page="landing" />
               <CanvasRow3 page="landing" />

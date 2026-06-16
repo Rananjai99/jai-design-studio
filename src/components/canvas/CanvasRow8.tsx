@@ -7,8 +7,9 @@ import { useTheme } from "@/context/ThemeContext";
 import styles from "./CanvasRows.module.css";
 
 export function CanvasRow8({ page }: { page: CanvasPage }) {
-  const { theme } = useTheme();
-  const stops = page === "home" ? (theme.home?.row8Gradient ?? theme.row8Gradient) : theme.row8Gradient;
+  const { theme, isOnLanding } = useTheme();
+  const isHome = page === "home";
+  const stops = isHome ? (theme.home?.row8Gradient ?? theme.row8Gradient) : theme.row8Gradient;
   const gradientCSS = `linear-gradient(to right, ${stops.join(", ")})`;
 
   return (
@@ -17,9 +18,14 @@ export function CanvasRow8({ page }: { page: CanvasPage }) {
         className={styles.gradientBar}
         style={{ background: gradientCSS }}
         key={theme.id} // re-trigger animation on theme change
-        initial={{ opacity: 0.6 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.8 }}
+        // Home: wipe the gradient in left→right on home entry. Landing: fade in.
+        initial={isHome ? { clipPath: "inset(0 100% 0 0)" } : { opacity: 0.6 }}
+        animate={
+          isHome
+            ? { clipPath: isOnLanding ? "inset(0 100% 0 0)" : "inset(0 0 0 0)" }
+            : { opacity: 1 }
+        }
+        transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
       />
     </div>
   );

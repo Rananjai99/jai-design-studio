@@ -29,7 +29,7 @@ function segmentsWithMerge(cols: number, mergeStart: number, mergeSpan: number) 
 }
 
 export function CanvasRow45({ page, cols }: CanvasRow45Props) {
-  const { theme } = useTheme();
+  const { theme, isOnLanding } = useTheme();
   const isHome = page === "home";
 
   // LANDING — 4 rectangles: cols 1 & 2 carry colour; cols 3 & 4 merge into one
@@ -85,7 +85,8 @@ export function CanvasRow45({ page, cols }: CanvasRow45Props) {
             key={seg.start}
             className={styles.row45Cell}
             style={{ backgroundColor: colour, gridColumn: `span ${seg.span}` }}
-            animate={{ backgroundColor: colour }}
+            // Reveal left→right (staggered by column) when the home page is entered.
+            animate={{ backgroundColor: colour, opacity: isOnLanding ? 0 : 1 }}
             transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1], delay: ((seg.start + seg.span / 2) / homeCells) * CANVAS.WAVE }}
           />
         );

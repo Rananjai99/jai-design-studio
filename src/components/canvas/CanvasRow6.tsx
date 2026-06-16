@@ -20,7 +20,7 @@ function segmentsWithMerge(cols: number, mergeStart: number, mergeSpan: number) 
 }
 
 export function CanvasRow6({ page, cols: colsProp }: { page: CanvasPage; cols?: number }) {
-  const { theme } = useTheme();
+  const { theme, isOnLanding } = useTheme();
   const cols = colsProp ?? (page === "landing" ? CANVAS.ROW6_COLS_LANDING : CANVAS.ROW6_COLS_HOME);
 
   if (page === "landing") {
@@ -56,7 +56,8 @@ export function CanvasRow6({ page, cols: colsProp }: { page: CanvasPage; cols?: 
             key={i}
             className={styles.solidCell}
             style={{ backgroundColor: colour }}
-            animate={{ backgroundColor: colour }}
+            // Reveal left→right (staggered by column) when the home page is entered.
+            animate={{ backgroundColor: colour, opacity: isOnLanding ? 0 : 1 }}
             transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1], delay: ((i + 0.5) / cols) * CANVAS.WAVE }}
           />
         );

@@ -20,7 +20,7 @@ function stripHash(hex: string) {
 }
 
 export function CanvasRow3({ page, cols: colsProp }: { page: CanvasPage; cols?: number }) {
-  const { theme } = useTheme();
+  const { theme, isOnLanding } = useTheme();
 
   if (page === "landing") {
     // First two *named* swatches → hex/name pairs across cells 1–4.
@@ -109,7 +109,7 @@ export function CanvasRow3({ page, cols: colsProp }: { page: CanvasPage; cols?: 
               key={theme.id}
               className={styles.row3Label}
               initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
+              animate={{ opacity: isOnLanding ? 0 : 1 }}
               transition={{ duration: 0.4, delay }}
             >
               <span className={`${c.kind === "hex" ? styles.hexCode : styles.colourName} montserrat`}>{c.text}</span>
