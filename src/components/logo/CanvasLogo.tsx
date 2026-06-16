@@ -37,7 +37,9 @@ interface CanvasLogoProps {
 
 export function CanvasLogo({ page = "landing", left = 0.5, width = 0.5 }: CanvasLogoProps) {
   const { isOnLanding } = useTheme();
-  const active = (page === "landing") === isOnLanding; // animate only the visible page's logo
+  // Only the landing logo stroke-draws (when the landing is active). The home
+  // logo never animates — it renders fully drawn and static.
+  const active = page === "landing" && isOnLanding;
   const jStem = useRef<SVGPathElement>(null);
   const jDot = useRef<SVGCircleElement>(null);
   const iStem = useRef<SVGPathElement>(null);
