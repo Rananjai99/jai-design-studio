@@ -91,24 +91,27 @@
 .row45Cell {
   flex: 1; height: 100%; display: flex; align-items: flex-end;
   padding: 12px 8px; transition: background-color 0.6s cubic-bezier(0.16,1,0.3,1);
-  cursor: default;
+  cursor: default; position: relative;
 }
 .navCell { cursor: pointer; }
-.navCell:hover { opacity: 0.88; }
+.navCell:hover {
+  box-shadow: 0 0 28px 6px rgba(0, 0, 0, 0.45);
+  z-index: 2;
+}
 /* Logo/tagline cell (home Row 4+5, cols 3–5) — logo overlay sits left, the
    vertical tagline is pushed to the right (the col-5 area). */
 .taglineCell { align-items: center; justify-content: flex-end; }
-.tagline {
-  font-family: "Langdon", "Arial Black", sans-serif;
-  font-size: 13px; font-weight: 400; text-transform: uppercase;
-  color: #000; letter-spacing: 0.06em; white-space: nowrap;
-  writing-mode: vertical-rl; transform: rotate(180deg);
-}
 .pageTitle {
-  font-family: "Langdon", "Arial Black", sans-serif;
-  font-size: 13px; font-weight: 400; text-transform: uppercase;
+  font-family: "Moon", "Montserrat", sans-serif;
+  font-size: 45px; font-weight: 400; text-transform: uppercase;
   color: #000; letter-spacing: 0.02em; line-height: 1.2;
   writing-mode: vertical-rl; transform: rotate(180deg);
+  max-height: 338px; overflow-wrap: break-word; word-break: break-word;
+}
+.tagline {
+  font-family: "Moon", "Montserrat", sans-serif;
+  font-size: 50px; font-weight: 400; text-transform: uppercase;
+  color: #000; letter-spacing: 0.06em;
 }
 
 /* ── Row 6 ───────────────────────────────────────────────────────────────────── */
@@ -118,7 +121,30 @@
 .row6.landing { display: grid; grid-template-columns: repeat(8, 1fr); }
 /* Home grid (24 cols = 2 tracks each of the 48-track base) so dividers align. */
 .row6.home { display: grid; grid-template-columns: repeat(24, 1fr); }
-.solidCell { flex: 1; height: 100%; transition: background-color 0.6s cubic-bezier(0.16,1,0.3,1); }
+.solidCell { flex: 1; height: 100%; transition: background-color 0.6s cubic-bezier(0.16,1,0.3,1); position: relative; }
+.solidCell:not(.mergedCell):hover {
+  box-shadow: 0 0 28px 6px rgba(0, 0, 0, 0.45);
+  z-index: 2;
+}
+/* No hover shadow on Row 6 cells 5–8 (logo zone underlay) */
+.row6 .solidCell:nth-child(n+5):nth-child(-n+8):hover {
+  box-shadow: none;
+  z-index: auto;
+}
+
+/* Clip shadow on the side that faces the logo zone */
+/* Row 4+5 rect 2 — no shadow bleeding right into logo zone */
+.row45 .navCell:nth-child(2):hover {
+  clip-path: inset(-50px 0px -50px -50px);
+}
+/* Row 6 rect 4 — no shadow bleeding right into logo zone (landing + home) */
+.row6 .solidCell:nth-child(4):hover {
+  clip-path: inset(-50px 0px -50px -50px);
+}
+/* Row 6 rect 9 — no shadow bleeding left into logo zone (home only) */
+.row6.home .solidCell:nth-child(9):hover {
+  clip-path: inset(-50px -50px -50px 0px);
+}
 /* Home logo zone: left edge (border-right on cell 4), bottom (cells 5–8), right (cell 8). */
 .row6.home .solidCell:nth-child(4) { border-right: var(--bw) solid #1a1a1a; }
 .row6.home .solidCell:nth-child(n+5):nth-child(-n+8) { border-bottom: var(--bw) solid #1a1a1a; }

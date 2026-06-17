@@ -7,6 +7,7 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { CanvasPage, CANVAS } from "./WorkingCanvas";
+import { playTick } from "@/lib/tickSound";
 import { useTheme } from "@/context/ThemeContext";
 import styles from "./CanvasRows.module.css";
 
@@ -38,6 +39,7 @@ export function CanvasRow6({ page, cols: colsProp }: { page: CanvasPage; cols?: 
               style={{ backgroundColor: colour, gridColumn: `span ${seg.span}` }}
               animate={{ backgroundColor: colour }}
               transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1], delay: ((seg.start + seg.span / 2) / cols) * CANVAS.WAVE }}
+              onMouseEnter={merged ? undefined : playTick}
             />
           );
         })}
@@ -56,9 +58,9 @@ export function CanvasRow6({ page, cols: colsProp }: { page: CanvasPage; cols?: 
             key={i}
             className={styles.solidCell}
             style={{ backgroundColor: colour }}
-            // Reveal left→right (staggered by column) when the home page is entered.
             animate={{ backgroundColor: colour, opacity: isOnLanding ? 0 : 1 }}
             transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1], delay: ((i + 0.5) / cols) * CANVAS.WAVE }}
+            onMouseEnter={i >= 4 && i <= 7 ? undefined : playTick}
           />
         );
       })}

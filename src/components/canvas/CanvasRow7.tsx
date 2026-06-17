@@ -3,6 +3,7 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { CanvasPage, CANVAS } from "./WorkingCanvas";
+import { playTick } from "@/lib/tickSound";
 import { useTheme } from "@/context/ThemeContext";
 import styles from "./CanvasRows.module.css";
 
@@ -28,6 +29,7 @@ export function CanvasRow7({ page, cols: colsProp }: { page: CanvasPage; cols?: 
             // Home cells reveal left→right (staggered by column) on home entry.
             animate={{ backgroundColor: colour, opacity: page === "home" ? (isOnLanding ? 0 : 1) : 1 }}
             transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1], delay: ((i + 0.5) / cols) * CANVAS.WAVE }}
+            onMouseEnter={playTick}
           />
         );
       })}

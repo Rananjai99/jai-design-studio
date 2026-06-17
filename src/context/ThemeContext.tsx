@@ -12,6 +12,9 @@ interface ThemeContextValue {
   isOnLanding: boolean;
   navigateToHome: () => void;
   navigateToLanding: () => void;
+  pageTransition: { targetRoute: string } | null;
+  startPageTransition: (route: string) => void;
+  clearPageTransition: () => void;
 }
 
 const ThemeContext = createContext<ThemeContextValue | null>(null);
@@ -50,6 +53,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
   const [previewId, setPreviewId] = useState<ThemeId | null>(null);
   const [hasExplicitChoice, setHasExplicitChoice] = useState(false);
   const [isOnLanding, setIsOnLanding] = useState(true);
+  const [pageTransition, setPageTransition] = useState<{ targetRoute: string } | null>(null);
 
   useEffect(() => {
     try {
@@ -95,9 +99,11 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
 
   const navigateToHome = useCallback(() => setIsOnLanding(false), []);
   const navigateToLanding = useCallback(() => setIsOnLanding(true), []);
+  const startPageTransition = useCallback((route: string) => setPageTransition({ targetRoute: route }), []);
+  const clearPageTransition = useCallback(() => setPageTransition(null), []);
 
   return (
-    <ThemeContext.Provider value={{ themeId, theme, selectTheme, previewTheme, resetTheme, hasExplicitChoice, isOnLanding, navigateToHome, navigateToLanding }}>
+    <ThemeContext.Provider value={{ themeId, theme, selectTheme, previewTheme, resetTheme, hasExplicitChoice, isOnLanding, navigateToHome, navigateToLanding, pageTransition, startPageTransition, clearPageTransition }}>
       {children}
     </ThemeContext.Provider>
   );

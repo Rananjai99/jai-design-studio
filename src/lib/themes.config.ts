@@ -7,8 +7,17 @@
  */
 
 export type ThemeId =
-  | "red" | "pink" | "blue" | "white" | "black"
+  | "red" | "pink" | "blue"
   | "green" | "purple" | "yellow" | "orange" | "default";
+
+/** Colours for the category/service detail pages. */
+export interface PageColours {
+  row2: string[];    // 6 hex values — project header column backgrounds
+  row37: string[];   // 6 hex values — large merged colour block
+  row8: string[];    // 24 hex values — bottom swatch strip
+  labelColor: string; // "PROJECT N" text colour
+  hexColor: string;   // hex label text colour (Row 2, Row 3-7, Row 8)
+}
 
 /** Per-page colour overrides for the home canvas. Any field omitted falls back
  *  to the matching landing array. Lets home + landing show different palettes. */
@@ -33,6 +42,8 @@ export interface ColourTheme {
   swatchGradient: string;
   /** Home-canvas colour overrides (the landing arrays above stay landing-only). */
   home?: HomeColours;
+  /** Category/service page colour palette. */
+  pageColors: PageColours;
 }
 
 // ─── BLUE (reference theme — all hex from artboards) ─────────────────────────
@@ -70,6 +81,20 @@ const blue: ColourTheme = {
   row8Gradient: ["#1341ff","#5c8eff"],
   shadowColours: ["#0b2ebe","#1341ff","#4278ff","#90b6ff","#ccdfff"],
   swatchGradient: "linear-gradient(to bottom, #1341ff, #4278ff)",
+  pageColors: {
+    row2:  ["#275cff","#275cff","#3d74ff","#5487ff","#6c9aff","#83adff"],
+    row37: ["#1341ff","#2960ff","#4278ff","#5c8eff","#76a3ff","#90b6ff"],
+    row8:  [
+      "#4278ff","#2960ff","#0900de","#0600be",
+      "#5487ff","#3d73ff","#0b2ebe","#07259e",
+      "#6696ff","#5285ff","#1c45be","#15389e",
+      "#79a4ff","#6696ff","#2f57be","#25489e",
+      "#8bb2ff","#7ba6ff","#4f7bde","#36569e",
+      "#9ebfff","#91b6ff","#668dde","#5678be",
+    ],
+    labelColor: "#ffffff",
+    hexColor:   "#ff0009",
+  },
   home: {
     row3Labels: [
       ["#0b2ebe","Blue Screens of Death"],["#0f37de","Sapphire Glitter"],
@@ -132,6 +157,20 @@ const defaultTheme: ColourTheme = {
   row8Gradient: ["#ffc300","#ff44a1","#ff0073","#ff0009"],
   shadowColours: ["#898989","#ffe3a3","#ffc300","#ff44a1","#ff0073","#ff0009"],
   swatchGradient: "linear-gradient(to bottom, #898989, #ffc300, #ff44a1, #ff0009)",
+  pageColors: {
+    row2:  ["#ffca42","#ffbb40","#ff8a64","#ff5eaa","#ff40a3","#ff4034"],
+    row37: ["#ffc300","#ffb300","#ff7c51","#ff44a1","#ff0073","#ff0009"],
+    row8:  [
+      "#ffd679","#ffd060","#c19200","#a57c00",
+      "#ffcb76","#ffc35e","#be8400","#9e6e00",
+      "#ffa688","#ff9876","#be5a3a","#9e4a2f",
+      "#ff87bc","#a57c00","#be3076","#9e2662",
+      "#ff76b7","#ff5ead","#be0070","#9e005d",
+      "#ff7766","#ff5e4e","#be0005","#9e0003",
+    ],
+    labelColor: "#fff0cc",
+    hexColor:   "#de0007",
+  },
   home: {
     row3Labels: [
       ["#898989","Argent"],["#aaaaaa","Dark Gray"],
@@ -189,6 +228,20 @@ const red: ColourTheme = {
   row8Gradient: ["#ff0009","#ff7766"],
   shadowColours: ["#ba0005","#ff0009","#ff5e40","#ffa192","#ffcdc9"],
   swatchGradient: "linear-gradient(to bottom, #ff0009, #ff7766)",
+  pageColors: {
+    row2:  ["#ff4034","#ff5b4c","#ff7161","#ff8676","#ff9889","#ffab9d"],
+    row37: ["#ff0009","#ff4034","#ff5e4e","#ff7766","#ff8c7c","#ffa192"],
+    row8:  [
+      "#ff7766","#ff5e4e","#de0007","#9e0003",
+      "#ff8575","#ff7161","#be2d24","#9e241c",
+      "#ff9484","#ff8373","#de5143","#9e372d",
+      "#ffa394","#ff9585","#be574a","#9e473c",
+      "#ffb0a3","#ffa496","#de796b","#be675a",
+      "#ffbeb2","#ffb4a8","#de8b7e","#be766b",
+    ],
+    labelColor: "#fff0cc",
+    hexColor:   "#ffca42",
+  },
   home: {
     row3Labels: [
       ["#be0005","Bloody Mary"],["#de0007","Red Pegasus"],
@@ -246,6 +299,20 @@ const pink: ColourTheme = {
   row8Gradient: ["#ff0099","#ff76b7"],
   shadowColours: ["#be0070","#ff0099","#ff5ead","#ffa0cb","#ffd0e5"],
   swatchGradient: "linear-gradient(to bottom, #ff0099, #ff76b7)",
+  pageColors: {
+    row2:  ["#ff40a3","#ff5bac","#ff71b5","#ff85be","#ff98c7","#ffaad0"],
+    row37: ["#ff0099","#ff40a3","#ff5ead","#ff76b7","#ff8cc1","#ffaad0"],
+    row8:  [
+      "#ff76b7","#ff5ead","#de0084","#be0070",
+      "#ff85be","#ff71b5","#de368d","#be2d78",
+      "#ff94c5","#ff83bd","#de5196","#be447f",
+      "#ffa2cc","#ff94c5","#de669f","#be5687",
+      "#ffb0d3","#ffa4cd","#be678f","#9e5577",
+      "#ffbdda","#ffb3d5","#be7696","#9e617d",
+    ],
+    labelColor: "#ffc300",
+    hexColor:   "#ffc300",
+  },
   home: {
     row3Labels: [
       ["#be0070","Aztec Warrior"],["#de0084","Vampire Love Story"],
@@ -303,6 +370,20 @@ const yellow: ColourTheme = {
   row8Gradient: ["#ffc300","#ffd679"],
   shadowColours: ["#be9000","#ffc300","#ffd879","#ffe8a3","#fff8c5"],
   swatchGradient: "linear-gradient(to bottom, #ffc300, #ffd879)",
+  pageColors: {
+    row2:  ["#ffca42","#ffd05e","#ffd574","#ffda88","#ffe19b","#ffe6ad"],
+    row37: ["#ffc300","#ffca42","#ffd060","#ffd679","#ffdd8f","#ffe3a3"],
+    row8:  [
+      "#ffd679","#ffd060","#be9000","#9e7800",
+      "#ffdb88","#ffd574","#deaf38","#9e7c25",
+      "#ffdf97","#ffda86","#deb552","#9e8038",
+      "#ffe3a5","#f2cb7c","#e2bf79","#9e8448",
+      "#ffe8b3","#ffe4a7","#bea469","#9e8857",
+      "#ffecc0","#ffe9b6","#bea878","#9e8c63",
+    ],
+    labelColor: "#de0007",
+    hexColor:   "#de0007",
+  },
   home: {
     row3Labels: [
       ["#be9000","Argent"],["#dea900","Dark Gray"],
@@ -356,6 +437,20 @@ const orange: ColourTheme = {
   row8Gradient: ["#ff7700","#ffa36d"],
   shadowColours: ["#be5800","#ff7700","#ffa048","#ffd090","#fff0c5"],
   swatchGradient: "linear-gradient(to bottom, #ff7700, #ffb060)",
+  pageColors: {
+    row2:  ["#ff8638","#ff9352","#ffa068","#ffad7d","#ffc19c","#ffccae"],
+    row37: ["#ff7700","#ff8638","#ff9555","#ffa36d","#ffb183","#ffbf99"],
+    row8:  [
+      "#ff9352","#de742f","#e8884f","#c15900",
+      "#ffaa78","#de7f46","#e79160","#c16427",
+      "#ffb488","#de8b59","#e79b70","#c16f3e",
+      "#ffbe98","#de966c","#e6a47f","#c17a51",
+      "#ffceb0","#dea787","#e6ad8d","#c18461",
+      "#ffd6be","#deb197","#e5b89c","#c19072",
+    ],
+    labelColor: "#fff0cc",
+    hexColor:   "#7a2000",
+  },
   home: {
     row3Labels: [
       ["#be5700","Fire Ant"],["#de6700","Ochre Spice"],
@@ -413,6 +508,20 @@ const green: ColourTheme = {
   row8Gradient: ["#80b155","#a5c98a"],
   shadowColours: ["#547838","#80b155","#a0c878","#d0e8a8","#eef8cc"],
   swatchGradient: "linear-gradient(to bottom, #80b155, #b0d488)",
+  pageColors: {
+    row2:  ["#8cb967","#97c077","#a3c787","#aece96","#bad6a5","#c4dcb3"],
+    row37: ["#80b155","#8cb967","#99c179","#99c179","#b2d19b","#bed8ab"],
+    row8:  [
+      "#a2c786","#79a059","#8baf68","#5f843e",
+      "#a1c685","#83a767","#8faf74","#688b4c",
+      "#accd93","#8dad75","#9bba7f","#729159",
+      "#bbd3a9","#97b382","#a5be92","#7c9767",
+      "#c8deb7","#a1ba8f","#aec49e","#859d74",
+      "#d0e3c2","#aabf9b","#b7c9a9","#8fa380",
+    ],
+    labelColor: "#ffffff",
+    hexColor:   "#de0007",
+  },
   home: {
     row3Labels: [
       ["#5d833d","Hidden Paradise"],["#6e9949","Kiwi"],
@@ -470,6 +579,20 @@ const purple: ColourTheme = {
   row8Gradient: ["#8040c8","#b57aed","#c8a0f4","#e0d0fa","#f2eeff"],
   shadowColours: ["#8040c8","#b57aed","#c8a0f4","#e0d0fa","#f2eeff"],
   swatchGradient: "linear-gradient(to bottom, #b57aed, #d0b0f6)",
+  pageColors: {
+    row2:  ["#bc88f0","#c394f2","#c9a1f4","#d0acf6","#d6b8f8","#ddc5fa"],
+    row37: ["#b57aed","#bc88f0","#c396f2","#cba3f5","#d2b0f7","#d9bef9"],
+    row8:  [
+      "#c394f2","#a375d1","#8d69b7","#885ab3",
+      "#c99ff4","#a980d2","#b591db","#8d65b5",
+      "#d4b4f7","#ae8bd4","#ba9bdc","#9270b6",
+      "#d5b4f7","#b595d6","#bfa4de","#997ab9",
+      "#bfa4de","#997ab9","#bfa4de","#997ab9",
+      "#e4d1fb","#c0abd9","#c9b7e1","#a38fbc",
+    ],
+    labelColor: "#ffc300",
+    hexColor:   "#ffc300",
+  },
   home: {
     row3Labels: [
       ["#8659b0","Lusty Lavender"],["#9d69ce","Legendary Lavender"],
@@ -497,77 +620,13 @@ const purple: ColourTheme = {
   },
 };
 
-// ─── WHITE ────────────────────────────────────────────────────────────────────
-const white: ColourTheme = {
-  id: "white", label: "White", baseHex: "#ffffff",
-  row3Labels: [
-    ["#b0b0b0","Ash"],["#c8c8c8","Silver"],["#ffffff","Pure White"],["#f5f5f5","Snow"],
-    ["#eeeeee","Platinum"],["#e8e8e8","Gainsboro"],["#e0e0e0","White Smoke"],
-    ["#d8d8d8","Light Grey"],["#d0d0d0","Pale Silver"],["#c8c8c8","Lavender Mist"],
-    ["#b0b0b0","Ash"],["#c8c8c8","Silver"],
-  ],
-  row4_5: [
-    "#b0b0b0","#c8c8c8","#ffffff","#f5f5f5",
-    "#eeeeee","#e8e8e8","#e0e0e0","#d8d8d8",
-    "#d0d0d0","#c8c8c8","#fff0cc","#fff0cc",
-  ],
-  row6: [
-    "#c8c8c8","#b0b0b0","#eeeeee","#d0d0d0","#e8e8e8","#d4d4d4","#e0e0e0","#d8d8d8",
-    "#d8d8d8","#cccccc","#d4d4d4","#c8c8c8","#e8e8e8","#dcdcdc","#f0f0f0","#e4e4e4",
-    "#e4e4e4","#d8d8d8","#e0e0e0","#d8d8d8","#e4e4e4","#d8d8d8","#e8e8e8","#dcdcdc",
-  ],
-  row7: [
-    "#f8f8f8","#f5f5f5","#eeeeee","#e8e8e8","#e4e4e4","#e0e0e0","#dcdcdc","#d8d8d8",
-    "#d4d4d4","#d0d0d0","#cccccc","#c8c8c8","#f0f0f0","#ececec","#e8e8e8","#e4e4e4",
-    "#e0e0e0","#dcdcdc","#d8d8d8","#d4d4d4","#d0d0d0","#cccccc","#c8c8c8","#c4c4c4",
-    "#f8f8f8","#f5f5f5","#eeeeee","#e8e8e8","#e4e4e4","#e0e0e0","#dcdcdc","#d8d8d8",
-    "#d4d4d4","#d0d0d0","#cccccc","#c8c8c8","#f0f0f0","#ececec","#e8e8e8","#e4e4e4",
-    "#e0e0e0","#dcdcdc","#d8d8d8","#d4d4d4","#d0d0d0","#cccccc","#c8c8c8","#c4c4c4",
-  ],
-  row8Gradient: ["#909090","#b0b0b0","#d0d0d0","#eeeeee","#ffffff"],
-  shadowColours: ["#909090","#b0b0b0","#d0d0d0","#eeeeee","#ffffff"],
-  swatchGradient: "linear-gradient(to bottom, #888888, #ffffff)",
-};
-
-// ─── BLACK ────────────────────────────────────────────────────────────────────
-const black: ColourTheme = {
-  id: "black", label: "Black", baseHex: "#000000",
-  row3Labels: [
-    ["#000000","Void"],["#0a0a0a","Jet Black"],["#111111","Charcoal"],["#222222","Ebony"],
-    ["#333333","Carbon"],["#444444","Dark Slate"],["#555555","Graphite"],
-    ["#666666","Dim Grey"],["#777777","Sonic Silver"],["#888888","Battleship"],
-    ["#000000","Void"],["#111111","Charcoal"],
-  ],
-  row4_5: [
-    "#000000","#0a0a0a","#111111","#222222",
-    "#333333","#444444","#555555","#666666",
-    "#777777","#888888","#fff0cc","#fff0cc",
-  ],
-  row6: [
-    "#0a0a0a","#000000","#333333","#111111","#444444","#222222","#555555","#333333",
-    "#666666","#444444","#777777","#555555","#888888","#666666","#999999","#777777",
-    "#777777","#555555","#555555","#333333","#888888","#666666","#999999","#777777",
-  ],
-  row7: [
-    "#080808","#050505","#000000","#000000","#181818","#121212","#0a0a0a","#050505",
-    "#282828","#202020","#181818","#101010","#383838","#303030","#282828","#202020",
-    "#484848","#404040","#383838","#303030","#585858","#505050","#484848","#404040",
-    "#080808","#050505","#000000","#000000","#181818","#121212","#0a0a0a","#050505",
-    "#282828","#202020","#181818","#101010","#383838","#303030","#282828","#202020",
-    "#484848","#404040","#383838","#303030","#585858","#505050","#484848","#404040",
-  ],
-  row8Gradient: ["#000000","#111111","#333333","#666666","#888888"],
-  shadowColours: ["#000000","#111111","#333333","#666666","#888888"],
-  swatchGradient: "linear-gradient(to bottom, #000000, #666666)",
-};
-
 // ─── EXPORTS ──────────────────────────────────────────────────────────────────
 export const themes: Record<ThemeId, ColourTheme> = {
-  red, pink, blue, white, black, green, purple, yellow, orange, default: defaultTheme,
+  red, pink, blue, green, purple, yellow, orange, default: defaultTheme,
 };
 
 export const themeOrder: ThemeId[] = [
-  "red","pink","blue","white","black","green","purple","yellow","orange","default",
+  "default","yellow","orange","pink","red","green","purple","blue",
 ];
 
 export const DEFAULT_THEME_ID: ThemeId = "default";
