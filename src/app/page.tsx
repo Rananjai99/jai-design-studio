@@ -87,7 +87,13 @@ export default function RootPage() {
   // Picker sits one margin-width to the right of the landing box's right edge.
   const pickerLeft = OFFSET + landingWidth * sL + OFFSET;
 
-  const { panRef, triggerPan } = useCanvasPan(landingCam, homeCam);
+  // Media panel — full canvas height, 8 Row-2 columns wide, one margin-gap to
+  // the right of the home canvas's right edge.
+  const mediaPanelLeft = OFFSET + homeWidth * sL + OFFSET;
+  const mediaPanelWidth = (12 / 48) * homeWidth * sL;
+  const mediaPanelHeight = CANVAS.HEIGHT * sL;
+
+  const { panRef, triggerPan, triggerReturn } = useCanvasPan(landingCam, homeCam);
 
   // One shared float-parallax offset for BOTH canvases, anchored on the landing
   // box. They share a top-left origin, so applying the same drift keeps their
@@ -133,6 +139,24 @@ export default function RootPage() {
               <CanvasRow8 page="home" />
             </WorkingCanvas>
           </div>
+        </div>
+
+        {/* Media panel — screen-space rectangle to the right of the home canvas,
+            full canvas height × 8 Row-2 columns wide. */}
+        <div
+          className={styles.mediaPanel}
+          style={{
+            left: mediaPanelLeft,
+            top: OFFSET,
+            width: mediaPanelWidth,
+            height: mediaPanelHeight,
+            opacity: isOnLanding ? 0 : 1,
+            pointerEvents: isOnLanding ? "none" : "auto",
+          }}
+        >
+          <button className={styles.mediaPanelBack} onClick={triggerReturn}>
+            Back
+          </button>
         </div>
 
         {/* Colour picker — screen-space, one margin-width right of the box,
