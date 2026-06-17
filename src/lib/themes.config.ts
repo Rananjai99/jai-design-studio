@@ -156,7 +156,7 @@ const defaultTheme: ColourTheme = {
   ],
   row8Gradient: ["#ffc300","#ff44a1","#ff0073","#ff0009"],
   shadowColours: ["#898989","#ffe3a3","#ffc300","#ff44a1","#ff0073","#ff0009"],
-  swatchGradient: "linear-gradient(to bottom, #898989, #ffc300, #ff44a1, #ff0009)",
+  swatchGradient: "linear-gradient(90deg, #ffc300 0 50%, #ff0099 50% 100%)",
   pageColors: {
     row2:  ["#ffca42","#ffbb40","#ff8a64","#ff5eaa","#ff40a3","#ff4034"],
     row37: ["#ffc300","#ffb300","#ff7c51","#ff44a1","#ff0073","#ff0009"],
@@ -626,7 +626,7 @@ export const themes: Record<ThemeId, ColourTheme> = {
 };
 
 export const themeOrder: ThemeId[] = [
-  "default","yellow","orange","pink","red","green","purple","blue",
+  "default","yellow","orange","red","pink","green","purple","blue",
 ];
 
 export const DEFAULT_THEME_ID: ThemeId = "default";

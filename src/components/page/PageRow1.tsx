@@ -55,7 +55,7 @@ export function PageRow1({ pageTitle }: PageRow1Props) {
           <span className={`${styles.pageSubtitle} langdon`}>{pageTitle}</span>
         </div>
         <div className={styles.row1Right}>
-          <a href={`mailto:${EMAIL}`} className={`${styles.contact} montserrat`}>{EMAIL.toUpperCase()}</a>
+          <a href={`mailto:${EMAIL}`} className={`${styles.contact} montserrat`}>{EMAIL}</a>
           <a href={`tel:${PHONE}`}    className={`${styles.contact} montserrat`}>{PHONE}</a>
         </div>
       </div>

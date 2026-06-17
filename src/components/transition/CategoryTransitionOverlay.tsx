@@ -136,18 +136,32 @@ export function CategoryTransitionOverlay() {
       router.push(pageTransition.targetRoute);
     }, 320);
 
-    // Phase 3 — fade entire overlay out; category page is already rendered
+    // Phase 3 — staggered left-to-right fade so the overlay peels back like a reveal
     const fadeId = setTimeout(() => {
-      const fade = "opacity 0.22s ease";
-      [...col2Refs.current, ...col37Refs.current, ...col8Refs.current].forEach(el => {
+      // Row 2: 6 leader groups, 80 ms between each
+      col2Refs.current.forEach((el, i) => {
         if (!el) return;
-        el.style.transition = fade;
+        const groupIdx = Math.floor(i / MERGE_2);
+        el.style.transition = `opacity 0.22s ease ${groupIdx * 80}ms`;
+        el.style.opacity    = "0";
+      });
+      // Row 3-7: 6 pair leaders, 80 ms between each
+      col37Refs.current.forEach((el, i) => {
+        if (!el) return;
+        const pairIdx = Math.floor(i / 2);
+        el.style.transition = `opacity 0.22s ease ${pairIdx * 80}ms`;
+        el.style.opacity    = "0";
+      });
+      // Row 8: 24 swatches, 20 ms between each
+      col8Refs.current.forEach((el, i) => {
+        if (!el) return;
+        el.style.transition = `opacity 0.22s ease ${i * 20}ms`;
         el.style.opacity    = "0";
       });
     }, 680);
 
-    // Phase 4 — remove overlay
-    const clearId = setTimeout(clearPageTransition, 950);
+    // Phase 4 — remove overlay after last column finishes (5×80 + 220ms fade + buffer)
+    const clearId = setTimeout(clearPageTransition, 1360);
 
     return () => {
       cancelAnimationFrame(rafId);

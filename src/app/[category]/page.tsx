@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect, useLayoutEffect } from "react";
+import React, { useState, useEffect, useLayoutEffect, useCallback } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { notFound } from "next/navigation";
 import { useTheme } from "@/context/ThemeContext";
@@ -34,6 +34,7 @@ export default function CategoryPage() {
   const pageTitle = PAGE_TITLES[category];
 
   const [vp, setVp] = useState({ w: 1440, h: 900 });
+  const [hoveredCol, setHoveredCol] = useState<number | null>(null);
 
   useIsoLayoutEffect(() => {
     const update = () => setVp({ w: window.innerWidth, h: window.innerHeight });
@@ -41,6 +42,9 @@ export default function CategoryPage() {
     window.addEventListener("resize", update);
     return () => window.removeEventListener("resize", update);
   }, []);
+
+  const onColEnter = useCallback((col: number) => setHoveredCol(col), []);
+  const onColLeave = useCallback(() => setHoveredCol(null), []);
 
   const scale   = (vp.h - 2 * OFFSET) / CANVAS_H;
   const scaledW = CANVAS_W * scale;
@@ -64,8 +68,8 @@ export default function CategoryPage() {
             </div>
             <div className={styles.canvas}>
               <PageRow1 pageTitle={pageTitle} />
-              <PageRow2 />
-              <PageRow37 />
+              <PageRow2 hoveredCol={hoveredCol} onColEnter={onColEnter} onColLeave={onColLeave} />
+              <PageRow37 hoveredCol={hoveredCol} onColEnter={onColEnter} onColLeave={onColLeave} />
               <PageRow8 />
             </div>
           </div>

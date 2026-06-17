@@ -32,16 +32,16 @@
 .row1Right { display: flex; flex-direction: column; justify-content: flex-start; align-items: flex-end; gap: 4px; flex-shrink: 0; }
 .studioName {
   font-family: "Langdon", "Arial Black", sans-serif;
-  font-size: 56px; font-weight: 400; text-transform: uppercase;
+  font-size: 65px; font-weight: 400; text-transform: uppercase;
   color: #000; letter-spacing: 0.02em; display: block;
 }
 .pageSubtitle {
-  font-family: "Langdon", "Arial Black", sans-serif;
+  font-family: "Moon", "Montserrat", sans-serif;
   font-size: 50px; font-weight: 400; text-transform: uppercase;
   color: #1a1a1a; letter-spacing: 0.02em; opacity: 0.75;
 }
 .contact {
-  font-family: "Montserrat", sans-serif; font-size: 24px;
+  font-family: "Montserrat", sans-serif; font-size: 25px;
   color: #000; text-decoration: none; display: block; text-align: right;
 }
 .contact:hover { text-decoration: underline; }
@@ -49,8 +49,6 @@
 /* ── Row 2 — 6 project columns ────────────────────────────────────────────── */
 .row2 {
   display: grid; grid-template-columns: repeat(6, 1fr);
-  border-left: var(--bw) solid #1a1a1a;
-  border-right: var(--bw) solid #1a1a1a;
   border-bottom: var(--bw) solid #1a1a1a;
   height: 181.25px; box-sizing: border-box;
 }
@@ -58,8 +56,10 @@
   display: flex; flex-direction: column; align-items: center;
   justify-content: center;
   border-right: var(--bw) solid #1a1a1a; box-sizing: border-box;
+  cursor: pointer; position: relative;
 }
-.row2Cell:last-child { border-right: none; }
+.row2Cell:first-child { border-left: var(--bw) solid #1a1a1a; }
+.row2Cell:last-child { border-right: var(--bw) solid #1a1a1a; }
 
 .projectLabel {
   font-family: "Moon", "Montserrat", sans-serif;
@@ -75,21 +75,14 @@
 /* ── Row 3-7 — Large merged colour block ──────────────────────────────────── */
 .row37 {
   display: grid; grid-template-columns: repeat(6, 1fr);
-  border-left: var(--bw) solid #1a1a1a;
-  border-right: var(--bw) solid #1a1a1a;
-  border-bottom: var(--bw) solid #1a1a1a;
   height: 906.25px; /* 5 × 181.25px */ box-sizing: border-box;
 }
 .row37Cell {
   display: flex; align-items: center; justify-content: center;
-  border-right: var(--bw) solid #1a1a1a; box-sizing: border-box;
+  box-sizing: border-box;
   cursor: pointer; position: relative;
 }
 .row37Cell:last-child { border-right: none; }
-.row37Cell:hover {
-  box-shadow: 0 0 28px 6px rgba(0, 0, 0, 0.45);
-  z-index: 2;
-}
 
 .bigHexLabel {
   font-family: "Montserrat", sans-serif;
@@ -102,8 +95,7 @@
 /* ── Row 8 — 24 swatch cells ──────────────────────────────────────────────── */
 .row8 {
   display: grid; grid-template-columns: repeat(24, 1fr);
-  border-left: var(--bw) solid #1a1a1a;
-  border-right: var(--bw) solid #1a1a1a;
+  border-top: var(--bw) solid #1a1a1a;
   border-bottom: var(--bw) solid #1a1a1a;
   height: 181.25px; box-sizing: border-box;
 }
@@ -112,7 +104,8 @@
   border-right: var(--bw) solid #1a1a1a; box-sizing: border-box;
   cursor: pointer; position: relative;
 }
-.row8Cell:last-child { border-right: none; }
+.row8Cell:first-child { border-left: var(--bw) solid #1a1a1a; }
+.row8Cell:last-child { border-right: var(--bw) solid #1a1a1a; }
 .row8Cell:hover {
   box-shadow: 0 0 28px 6px rgba(0, 0, 0, 0.45);
   z-index: 2;

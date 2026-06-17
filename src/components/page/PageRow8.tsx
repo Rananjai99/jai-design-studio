@@ -21,7 +21,7 @@ export function PageRow8() {
             className={styles.row8Cell}
             style={{ backgroundColor: bg }}
             animate={{ backgroundColor: bg }}
-            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1], delay: (i / SWATCH_COUNT) * 0.4 }}
+            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
             onMouseEnter={playTick}
           />
         );
