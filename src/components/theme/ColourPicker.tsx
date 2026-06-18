@@ -9,6 +9,7 @@ import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ThemeId, themeOrder, themes } from "@/lib/themes.config";
 import { useTheme } from "@/context/ThemeContext";
+import { playTick } from "@/lib/tickSound";
 import styles from "./ColourPicker.module.css";
 
 interface ColourPickerProps {
@@ -53,7 +54,7 @@ export function ColourPicker({ visible, onProceed, onOptionsHover }: ColourPicke
                       selectTheme(id);
                       onProceed();
                     }}
-                    onMouseEnter={() => { previewTheme(id); setHoverId(id); }}
+                    onMouseEnter={() => { previewTheme(id); setHoverId(id); playTick(); }}
                     onFocus={() => { previewTheme(id); setHoverId(id); }}
                     onBlur={() => { previewTheme(null); setHoverId(null); }}
                     aria-pressed={sel}

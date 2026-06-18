@@ -35,6 +35,7 @@ export default function CategoryPage() {
 
   const [vp, setVp] = useState({ w: 1440, h: 900 });
   const [hoveredCol, setHoveredCol] = useState<number | null>(null);
+  const [selectedProject, setSelectedProject] = useState<number | null>(null);
 
   useIsoLayoutEffect(() => {
     const update = () => setVp({ w: window.innerWidth, h: window.innerHeight });
@@ -45,6 +46,10 @@ export default function CategoryPage() {
 
   const onColEnter = useCallback((col: number) => setHoveredCol(col), []);
   const onColLeave = useCallback(() => setHoveredCol(null), []);
+  const onProjectClick = useCallback((col: number) => {
+    setSelectedProject(prev => (prev === col ? prev : col));
+  }, []);
+  const onDeselect = useCallback(() => setSelectedProject(null), []);
 
   const scale   = (vp.h - 2 * OFFSET) / CANVAS_H;
   const scaledW = CANVAS_W * scale;
@@ -53,7 +58,7 @@ export default function CategoryPage() {
   if (!pageTitle) return notFound();
 
   return (
-    <div className={styles.pageRoot}>
+    <div className={styles.pageRoot} onClick={onDeselect}>
       <div className={styles.viewport}>
         <div
           className={styles.canvasPositioner}
@@ -61,6 +66,7 @@ export default function CategoryPage() {
             transform: `translate(${OFFSET}px, ${OFFSET}px) scale(${scale})`,
             ["--canvas-scale" as string]: scale,
           }}
+          onClick={e => e.stopPropagation()}
         >
           <div style={{ width: CANVAS_W, height: CANVAS_H }}>
             <div className={styles.shadow} aria-hidden="true">
@@ -68,9 +74,15 @@ export default function CategoryPage() {
             </div>
             <div className={styles.canvas}>
               <PageRow1 pageTitle={pageTitle} />
-              <PageRow2 hoveredCol={hoveredCol} onColEnter={onColEnter} onColLeave={onColLeave} />
-              <PageRow37 hoveredCol={hoveredCol} onColEnter={onColEnter} onColLeave={onColLeave} />
-              <PageRow8 />
+              <PageRow2
+                hoveredCol={hoveredCol} onColEnter={onColEnter} onColLeave={onColLeave}
+                selectedProject={selectedProject} onProjectClick={onProjectClick}
+              />
+              <PageRow37
+                hoveredCol={hoveredCol} onColEnter={onColEnter} onColLeave={onColLeave}
+                selectedProject={selectedProject} onProjectClick={onProjectClick}
+              />
+              <PageRow8 selectedProject={selectedProject} />
             </div>
           </div>
         </div>
@@ -79,7 +91,7 @@ export default function CategoryPage() {
         <button
           className={styles.backBtn}
           style={{ left: backLeft, top: OFFSET }}
-          onClick={() => router.back()}
+          onClick={() => selectedProject !== null ? onDeselect() : router.back()}
         >
           ← Back
         </button>

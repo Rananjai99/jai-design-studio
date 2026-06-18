@@ -70,103 +70,61 @@ export function CategoryTransitionOverlay() {
     if (!pageTransition) return;
 
     // Capture dimensions at transition start
-    const _cW48 = cW48, _cW6 = cW6, _cW12 = cW12;
-    const _r2Top = r2Top, _r2H = r2H;
-    const _r45Top = r45Top, _r37Top = r37Top, _r45H = r45H, _r37H = r37H;
-    const _r8Top = r8Top, _r8H = r8H, _swW = swW;
+    const _cW6 = cW6;
+    const _r37Top = r37Top, _r37H = r37H;
+    const _r8Top = r8Top;
 
-    // Phase 1 — merge all three rows simultaneously (double rAF commits initial paint first)
+    // Merge + fade start simultaneously (double rAF commits initial paint first),
+    // and navigation fires immediately so the category page mounts behind the overlay.
     const rafId = requestAnimationFrame(() => {
       requestAnimationFrame(() => {
-        const merge = [
+        // Position transitions for the merge/expand animation
+        const mergeBase = [
           "left   0.55s cubic-bezier(0.16, 1, 0.3, 1)",
           "top    0.55s cubic-bezier(0.16, 1, 0.3, 1)",
           "width  0.55s cubic-bezier(0.16, 1, 0.3, 1)",
           "height 0.55s cubic-bezier(0.16, 1, 0.3, 1)",
-          "opacity 0.35s ease",
         ].join(", ");
 
-        // Row 2: 48 columns merge horizontally into 6 (groups of 8)
+        // Navigate now — category page mounts behind the fading overlay
+        router.push(pageTransition.targetRoute);
+
+        // Row 2: merge horizontally + fade left-to-right simultaneously
         col2Refs.current.forEach((el, i) => {
           if (!el) return;
           const isLeader = i % MERGE_2 === 0;
-          el.style.transition = merge;
-          // top and height don't change for Row 2
-          if (isLeader) {
-            el.style.width = `${_cW6}px`;   // expands to full group width
-          } else {
-            el.style.width   = "0px";        // collapses into the group leader
-            el.style.opacity = "0";
-          }
-          void _cW48; void _r2Top; void _r2H; // captured
+          const groupIdx = Math.floor(i / MERGE_2);
+          el.style.transition = `${mergeBase}, opacity 0.22s ease ${groupIdx * 80}ms`;
+          el.style.width   = isLeader ? `${_cW6}px` : "0px";
+          el.style.opacity = "0";
         });
 
-        // Row 3-7: 12 columns merge into 6 while expanding vertically
+        // Row 3-7: expand vertically + merge horizontally + fade left-to-right simultaneously
         col37Refs.current.forEach((el, i) => {
           if (!el) return;
           const isEven = i % 2 === 0;
-          el.style.transition = merge;
+          const pairIdx = Math.floor(i / 2);
+          el.style.transition = `${mergeBase}, opacity 0.22s ease ${pairIdx * 80}ms`;
           el.style.top    = `${_r37Top}px`;
           el.style.height = `${_r37H}px`;
-          if (isEven) {
-            el.style.width = `${_cW6}px`;
-          } else {
-            el.style.width   = "0px";
-            el.style.opacity = "0";
-          }
-          void _cW12;
+          el.style.width  = isEven ? `${_cW6}px` : "0px";
+          el.style.opacity = "0";
         });
 
-        // Row 8: swatches slide up from below and fade in
+        // Row 8: slide into position (stays transparent, removed with overlay)
         col8Refs.current.forEach((el) => {
           if (!el) return;
-          el.style.transition = [
-            "top     0.55s cubic-bezier(0.16, 1, 0.3, 1)",
-            "opacity 0.35s ease 0.15s",
-          ].join(", ");
-          el.style.top     = `${_r8Top}px`;
-          el.style.opacity = "1";
-          void _swW; void _r8H;
+          el.style.transition = "top 0.55s cubic-bezier(0.16, 1, 0.3, 1)";
+          el.style.top = `${_r8Top}px`;
         });
       });
     });
 
-    // Phase 2 — navigate early so category page mounts behind the still-solid overlay
-    const navId = setTimeout(() => {
-      router.push(pageTransition.targetRoute);
-    }, 320);
-
-    // Phase 3 — staggered left-to-right fade so the overlay peels back like a reveal
-    const fadeId = setTimeout(() => {
-      // Row 2: 6 leader groups, 80 ms between each
-      col2Refs.current.forEach((el, i) => {
-        if (!el) return;
-        const groupIdx = Math.floor(i / MERGE_2);
-        el.style.transition = `opacity 0.22s ease ${groupIdx * 80}ms`;
-        el.style.opacity    = "0";
-      });
-      // Row 3-7: 6 pair leaders, 80 ms between each
-      col37Refs.current.forEach((el, i) => {
-        if (!el) return;
-        const pairIdx = Math.floor(i / 2);
-        el.style.transition = `opacity 0.22s ease ${pairIdx * 80}ms`;
-        el.style.opacity    = "0";
-      });
-      // Row 8: 24 swatches, 20 ms between each
-      col8Refs.current.forEach((el, i) => {
-        if (!el) return;
-        el.style.transition = `opacity 0.22s ease ${i * 20}ms`;
-        el.style.opacity    = "0";
-      });
-    }, 680);
-
-    // Phase 4 — remove overlay after last column finishes (5×80 + 220ms fade + buffer)
-    const clearId = setTimeout(clearPageTransition, 1360);
+    // Remove overlay after the last fade group finishes (5×80ms stagger + 220ms fade + buffer)
+    const clearId = setTimeout(clearPageTransition, 700);
 
     return () => {
       cancelAnimationFrame(rafId);
-      clearTimeout(navId);
-      clearTimeout(fadeId);
       clearTimeout(clearId);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps

@@ -158,13 +158,13 @@ const defaultTheme: ColourTheme = {
   shadowColours: ["#898989","#ffe3a3","#ffc300","#ff44a1","#ff0073","#ff0009"],
   swatchGradient: "linear-gradient(90deg, #ffc300 0 50%, #ff0099 50% 100%)",
   pageColors: {
-    row2:  ["#ffca42","#ffbb40","#ff8a64","#ff5eaa","#ff40a3","#ff4034"],
+    row2:  ["#ffca42","#ffbb40","#ff8a64","#ff5eaa","#ff0099","#ff4034"],
     row37: ["#ffc300","#ffb300","#ff7c51","#ff44a1","#ff0073","#ff0009"],
     row8:  [
       "#ffd679","#ffd060","#c19200","#a57c00",
       "#ffcb76","#ffc35e","#be8400","#9e6e00",
       "#ffa688","#ff9876","#be5a3a","#9e4a2f",
-      "#ff87bc","#a57c00","#be3076","#9e2662",
+      "#ff87bc","#ff73b3","#be3076","#9e2662",
       "#ff76b7","#ff5ead","#be0070","#9e005d",
       "#ff7766","#ff5e4e","#be0005","#9e0003",
     ],
