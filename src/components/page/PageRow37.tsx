@@ -1,15 +1,16 @@
 "use client";
-import React, { useRef, useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useTheme } from "@/context/ThemeContext";
 import { playTick } from "@/lib/tickSound";
 import styles from "./PageRows.module.css";
 
+const MAX_PHOTOS = 4; // placeholder count — replace when real photos are wired up
+
 const SWATCH_UNIT = 2480 / 24;
 const SELECTED_W  = SWATCH_UNIT * 20;
 const COLLAPSED_W = (SWATCH_UNIT * 4) / 5;
 const NATURAL_W   = 2480 / 6;
-const ROW_37_H    = 906.25;
 
 const EASE = { duration: 0.6, ease: [0.16, 1, 0.3, 1] as [number, number, number, number] };
 
@@ -25,66 +26,26 @@ function cellWidth(i: number, sel: number | null): number {
   return i === sel ? SELECTED_W : COLLAPSED_W;
 }
 
-interface FlyState {
-  key: number;
-  color: string;
-  fromX: number;
-  fromW: number;
-  toX: number;
-  toW: number;
-  y: number;
-  h: number;
-}
-
 interface PageRow37Props {
   hoveredCol: number | null;
   onColEnter: (col: number) => void;
   onColLeave: () => void;
   selectedProject: number | null;
   onProjectClick: (col: number) => void;
+  /** Suppresses the in-cell photo while the page-level flying photo is animating. */
+  isFlyActive?: boolean;
 }
 
-export function PageRow37({ hoveredCol, onColEnter, onColLeave, selectedProject, onProjectClick }: PageRow37Props) {
+export function PageRow37({ hoveredCol, onColEnter, onColLeave, selectedProject, onProjectClick, isFlyActive }: PageRow37Props) {
   const { theme } = useTheme();
   const { row37, hexColor } = theme.pageColors;
 
-  // Track previous selection and the current theme color via refs so the
-  // fly-trigger effect only depends on selectedProject (not hexColor).
-  const prevSelRef   = useRef<number | null>(null);
-  const hexColorRef  = useRef(hexColor);
-  const flyKeyRef    = useRef(0);
-  const [flyState, setFlyState] = useState<FlyState | null>(null);
+  const [photoIndex, setPhotoIndex] = useState(0);
 
-  // Keep hexColorRef current so the fly snapshot always uses the right color.
-  useEffect(() => { hexColorRef.current = hexColor; }, [hexColor]);
-
-  useEffect(() => {
-    const prevSel = prevSelRef.current;
-    prevSelRef.current = selectedProject;
-
-    if (prevSel !== null && selectedProject !== null && prevSel !== selectedProject) {
-      // Switching projects: fly the photo from the squeezed source position.
-      const fromLeft = cellLeft(selectedProject, prevSel);
-      flyKeyRef.current += 1;
-      setFlyState({
-        key:   flyKeyRef.current,
-        color: hexColorRef.current,
-        fromX: fromLeft + COLLAPSED_W * 0.125,
-        fromW: COLLAPSED_W * 0.75,
-        toX:   SELECTED_W * 0.125,
-        toW:   SELECTED_W * 0.75,
-        y:     ROW_37_H  * 0.125,
-        h:     ROW_37_H  * 0.75,
-      });
-
-      // Fallback clear after animation duration + buffer.
-      const timer = setTimeout(() => setFlyState(null), 700);
-      return () => clearTimeout(timer);
-    }
-  }, [selectedProject]);
+  // Reset photo index when selected project changes
+  useEffect(() => { setPhotoIndex(0); }, [selectedProject]);
 
   const isAnySelected = selectedProject !== null;
-  const isFlyActive   = flyState !== null;
 
   return (
     <div className={`${styles.row} ${styles.row37}`}>
@@ -109,14 +70,13 @@ export function PageRow37({ hoveredCol, onColEnter, onColLeave, selectedProject,
               borderLeft: isThisSelected ? "var(--bw) solid #1a1a1a" : undefined,
             }}
             animate={{ left: targetLeft, width: targetWidth + 1, backgroundColor: bg }}
-            transition={EASE}
+            transition={isFlyActive ? { ...EASE, delay: 0.18 } : EASE}
             onMouseEnter={() => { onColEnter(i); playTick(); }}
             onMouseLeave={onColLeave}
             onClick={() => onProjectClick(i)}
           >
             <AnimatePresence>
-              {/* Hide the in-cell photo while the flying photo is animating;
-                  fade it in once the fly completes. */}
+              {/* Hide while the page-level flying photo is animating; fade in after. */}
               {isThisSelected && !isFlyActive && (
                 <motion.div
                   key={`photo-${i}`}
@@ -125,35 +85,42 @@ export function PageRow37({ hoveredCol, onColEnter, onColLeave, selectedProject,
                   animate={{ opacity: 1 }}
                   exit={{ opacity: 0 }}
                   transition={{ duration: 0.3 }}
+                  onClick={e => e.stopPropagation()}
+                  style={{ pointerEvents: "auto" }}
                 >
+                  {/* Left arrow — only shown past the first photo */}
+                  {photoIndex > 0 && (
+                    <button
+                      className={`${styles.photoArrow} ${styles.photoArrowLeft}`}
+                      onClick={e => { e.stopPropagation(); setPhotoIndex(p => p - 1); }}
+                      aria-label="Previous photo"
+                    >
+                      <svg viewBox="0 0 40 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <polyline points="30,5 10,30 30,55" stroke="#1a1a1a" strokeWidth="5" strokeLinecap="round" strokeLinejoin="round"/>
+                      </svg>
+                    </button>
+                  )}
+
                   <div className={styles.photoRect} style={{ backgroundColor: hexColor }} />
+
+                  {/* Right arrow — always shown (more photos available) */}
+                  {photoIndex < MAX_PHOTOS - 1 && (
+                    <button
+                      className={`${styles.photoArrow} ${styles.photoArrowRight}`}
+                      onClick={e => { e.stopPropagation(); setPhotoIndex(p => p + 1); }}
+                      aria-label="Next photo"
+                    >
+                      <svg viewBox="0 0 40 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <polyline points="10,5 30,30 10,55" stroke="#1a1a1a" strokeWidth="5" strokeLinecap="round" strokeLinejoin="round"/>
+                      </svg>
+                    </button>
+                  )}
                 </motion.div>
               )}
             </AnimatePresence>
           </motion.div>
         );
       })}
-
-      {/* Flying photo — absolutely positioned in Row 37, above all cells.
-          Slides left and grows from the squeezed column to the expanded column. */}
-      {flyState && (
-        <motion.div
-          key={flyState.key}
-          style={{
-            position:       "absolute",
-            top:            flyState.y,
-            left:           flyState.fromX,
-            width:          flyState.fromW,
-            height:         flyState.h,
-            backgroundColor: flyState.color,
-            zIndex:         20,
-            pointerEvents:  "none",
-          }}
-          animate={{ left: flyState.toX, width: flyState.toW }}
-          transition={EASE}
-          onAnimationComplete={() => setFlyState(null)}
-        />
-      )}
     </div>
   );
 }

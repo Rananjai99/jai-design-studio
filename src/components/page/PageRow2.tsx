@@ -33,9 +33,10 @@ interface PageRow2Props {
   onColLeave: () => void;
   selectedProject: number | null;
   onProjectClick: (col: number) => void;
+  isFlyActive?: boolean;
 }
 
-export function PageRow2({ hoveredCol, onColEnter, onColLeave, selectedProject, onProjectClick }: PageRow2Props) {
+export function PageRow2({ hoveredCol, onColEnter, onColLeave, selectedProject, onProjectClick, isFlyActive }: PageRow2Props) {
   const { theme } = useTheme();
   const { row2 } = theme.pageColors;
   const labelColor = theme.id === "blue" ? theme.pageColors.labelColor : "#1a1a1a";
@@ -43,7 +44,12 @@ export function PageRow2({ hoveredCol, onColEnter, onColLeave, selectedProject, 
   const isAnySelected = selectedProject !== null;
 
   return (
-    <div className={`${styles.row} ${styles.row2}`}>
+    <motion.div
+      className={`${styles.row} ${styles.row2}`}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={EASE}
+    >
       {[0, 1, 2, 3, 4, 5].map((i) => {
         const bg = row2[i] ?? "#fff0cc";
         const isThisSelected = isAnySelected && i === selectedProject;
@@ -64,7 +70,7 @@ export function PageRow2({ hoveredCol, onColEnter, onColLeave, selectedProject, 
               zIndex: isThisSelected || isHovered ? 10 : 6 - i,
             }}
             animate={{ left: targetLeft, width: targetWidth + 1, backgroundColor: bg }}
-            transition={EASE}
+            transition={isFlyActive ? { ...EASE, delay: 0.18 } : EASE}
             onMouseEnter={() => { onColEnter(i); playTick(); }}
             onMouseLeave={onColLeave}
             onClick={() => onProjectClick(i)}
@@ -113,6 +119,6 @@ export function PageRow2({ hoveredCol, onColEnter, onColLeave, selectedProject, 
           </motion.div>
         );
       })}
-    </div>
+    </motion.div>
   );
 }

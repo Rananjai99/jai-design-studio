@@ -31,15 +31,21 @@ function cellWidth(flatIdx: number, sel: number | null): number {
 
 interface PageRow8Props {
   selectedProject: number | null;
+  isFlyActive?: boolean;
 }
 
-export function PageRow8({ selectedProject }: PageRow8Props) {
+export function PageRow8({ selectedProject, isFlyActive }: PageRow8Props) {
   const { theme } = useTheme();
   const { row8 } = theme.pageColors;
   const labelColor = theme.id === "blue" ? theme.pageColors.labelColor : "#1a1a1a";
 
   return (
-    <div className={`${styles.row} ${styles.row8}`}>
+    <motion.div
+      className={`${styles.row} ${styles.row8}`}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={EASE}
+    >
       {Array.from({ length: 24 }, (_, flatIdx) => {
         const proj = Math.floor(flatIdx / 4);
         const h    = flatIdx % 4;
@@ -54,8 +60,8 @@ export function PageRow8({ selectedProject }: PageRow8Props) {
             className={isHighlight ? styles.highlightCell : styles.row8Cell}
             style={{ position: "absolute", top: 0, height: "100%", overflow: "hidden", zIndex: 24 - flatIdx }}
             animate={{ left: targetLeft, width: targetWidth + 1, backgroundColor: bg }}
-            transition={EASE}
-            onMouseEnter={playTick}
+            transition={isFlyActive ? { ...EASE, delay: 0.18 } : EASE}
+            onMouseEnter={isHighlight ? undefined : playTick}
           >
             {isHighlight && (
               <span className={`${styles.highlightLabel} moon`} style={{ color: labelColor }}>
@@ -65,6 +71,6 @@ export function PageRow8({ selectedProject }: PageRow8Props) {
           </motion.div>
         );
       })}
-    </div>
+    </motion.div>
   );
 }

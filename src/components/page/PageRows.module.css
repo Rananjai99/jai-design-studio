@@ -130,7 +130,22 @@
 }
 .photoRect {
   width: 75%; height: 75%;
+  flex-shrink: 0;
 }
+
+.photoArrow {
+  position: absolute;
+  top: 50%; transform: translateY(-50%);
+  display: flex; align-items: center; justify-content: center;
+  width: 12.5%; height: 75%;
+  background: none; border: none; cursor: pointer; padding: 0;
+  opacity: 0.5;
+  transition: opacity 0.2s ease;
+}
+.photoArrow:hover { opacity: 1; }
+.photoArrow svg { width: 30px; height: auto; }
+.photoArrowLeft  { left: 0; }
+.photoArrowRight { right: 0; }
 
 .bigHexLabel {
   font-family: "Montserrat", sans-serif;
