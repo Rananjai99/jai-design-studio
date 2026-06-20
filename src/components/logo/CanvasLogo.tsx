@@ -36,10 +36,17 @@ interface CanvasLogoProps {
 }
 
 export function CanvasLogo({ page = "landing", left = 0.5, width = 0.5 }: CanvasLogoProps) {
-  const { isOnLanding } = useTheme();
+  const { isOnLanding, theme } = useTheme();
   // Only the landing logo stroke-draws (when the landing is active). The home
   // logo never animates — it renders fully drawn and static.
   const active = page === "landing" && isOnLanding;
+  // Arch gradient: Rectangle 6 (index 5) from home row4_5 → base canvas colour.
+  // Only rendered on the home canvas, clipped to the Row 4+5 vertical band.
+  const archGradTop = page === "home"
+    ? theme.id === "default"
+      ? (theme.home?.row4_5?.[3] ?? theme.row4_5[3])
+      : (theme.home?.row4_5?.[5] ?? theme.row4_5[5])
+    : null;
   const jStem = useRef<SVGPathElement>(null);
   const jDot = useRef<SVGCircleElement>(null);
   const iStem = useRef<SVGPathElement>(null);
@@ -100,6 +107,35 @@ export function CanvasLogo({ page = "landing", left = 0.5, width = 0.5 }: Canvas
         role="img"
         aria-label="Jai Design Studio logo"
       >
+        {/* Arch interior gradient — home canvas only, clipped to Row 4+5 band
+            (SVG y≈330–1155). Gradient runs top→bottom: row4_5[5] → base cream.
+            Stroke elements render on top so the dark lines contain the fill. */}
+        {archGradTop && (
+          <>
+            <defs>
+              <linearGradient
+                id="archGrad"
+                gradientUnits="userSpaceOnUse"
+                x1="0" y1="318" x2="0" y2="1143"
+              >
+                <stop offset="0%" stopColor={archGradTop} />
+                <stop offset="100%" stopColor="#fff0cc" />
+              </linearGradient>
+              <clipPath id="archClip">
+                <rect x="200" y="318" width="380" height="825" />
+              </clipPath>
+            </defs>
+            {/* Left arch body: between aMain's left leg (outer) and aInner (second line).
+                Path: up the outer left leg → left arch-top curve → straight to aInner crown
+                → down reversed aInner bezier → close at Row-5 bottom. */}
+            <path
+              d="M222.69,1143 V475.31 C222.69,388.27 293.25,317.71 380.29,317.71 L419.69,322.67 C351.71,340.17 301.49,401.87 301.49,475.31 V1143 Z"
+              fill="url(#archGrad)"
+              clipPath="url(#archClip)"
+              stroke="none"
+            />
+          </>
+        )}
         {/* J — left stem + dot (flows from the top) */}
         <path ref={jStem} d="M160.1,732.88v592.47c0,87.04-70.56,157.6-157.6,157.6" {...STROKE} />
         <circle ref={jDot} cx="160.1" cy="661.65" r="27.4" {...STROKE} />
