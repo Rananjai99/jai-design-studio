@@ -74,17 +74,28 @@ const PROJECT_MEDIA: Record<string, Record<number, ProjectMedia>> = {
       ],
     },
     3: {
-      cover: "/images/photography/project-4/cover/6 Chicago Bold Uncoloured.jpg",
+      cover: "/images/photography/project-4/cover/Chicago COla Complete.jpg",
       photos: [
         "/images/photography/project-4/photos/1.jpg",
         "/images/photography/project-4/photos/6 Chicago Bold Uncoloured.jpg",
         "/images/photography/project-4/photos/8.jpg",
-        "/images/photography/project-4/photos/Behance Chicago Dystopia.jpg",
+        "/images/photography/project-4/photos/Chicago Dystopia.jpg",
         "/images/photography/project-4/photos/Chicagi Ird.jpg",
         "/images/photography/project-4/photos/Chicago Cerise.jpg",
         "/images/photography/project-4/photos/Chicago COla Complete.jpg",
         "/images/photography/project-4/photos/Chicago Moon no text.jpg",
+        "/images/photography/project-4/photos/Chicago Neon 1.jpg",
+        "/images/photography/project-4/photos/Neon UIC 1.jpg",
         "/images/photography/project-4/photos/The Carlyle Poster.jpg",
+      ],
+    },
+    4: {
+      cover: "/images/photography/project-5/cover/Birdie.jpg",
+      photos: [
+        "/images/photography/project-5/photos/Birdie.jpg",
+        "/images/photography/project-5/photos/DSC01847.JPG",
+        "/images/photography/project-5/photos/DSC_0621.jpg",
+        "/images/photography/project-5/photos/The Golden Oriole.jpg",
       ],
     },
     5: {

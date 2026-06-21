@@ -215,10 +215,31 @@ export function PageRow37({ hoveredCol, onColEnter, onColLeave, selectedProject,
                   style={{
                     position: "absolute", inset: 0, width: "100%", height: "100%",
                     objectFit: "cover", display: "block", pointerEvents: "none",
-                    objectPosition: (i === 1 && isAnySelected && selectedProject !== null && i > selectedProject)
-                      ? "calc(50% + 40px) 50%"
-                      : (i === 0 && isAnySelected && selectedProject !== 0)
-                      ? "calc(50% - 25px) 50%"
+                    objectPosition:
+                      (i === 1 && selectedProject !== null && i > selectedProject)
+                        ? "calc(50% + 40px) 50%"
+                      : (i === 1 && selectedProject === 2)
+                        ? "calc(50% + 25px) 50%"
+                      : (i === 0 && selectedProject === 1)
+                        ? "calc(50% + 25px) 50%"
+                      : (i === 0 && selectedProject === 3)
+                        ? "calc(50% + 20px) 50%"
+                      : (i === 0 && selectedProject !== 0)
+                        ? "calc(50% - 30px) 50%"
+                      : (i === 1 && selectedProject === 3)
+                        ? "calc(50% + 40px) 50%"
+                      : (i === 2 && selectedProject === 1)
+                        ? "calc(50% + 45px) 50%"
+                      : (i === 2 && selectedProject === 3)
+                        ? "calc(50% + 25px) 50%"
+                      : (i === 3 && selectedProject === 1)
+                        ? "calc(50% + 230px) 50%"
+                      : (i === 3 && selectedProject === 2)
+                        ? "calc(50% + 150px) 50%"
+                      : (i === 3 && selectedProject === 0)
+                        ? "calc(50% + 150px) 50%"
+                      : (i === 3 && !isAnySelected)
+                        ? "calc(50% + 50px) 50%"
                       : "50% 50%",
                     transform: i === 1 ? "scale(1.5)" : undefined,
                     transformOrigin: "center center",
