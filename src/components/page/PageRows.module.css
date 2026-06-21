@@ -49,18 +49,7 @@
 /* ── Row 2 — 6 project columns ────────────────────────────────────────────── */
 .row2 {
   position: relative; overflow: hidden;
-  border-bottom: var(--bw) solid #1a1a1a;
   height: 181.25px; box-sizing: border-box;
-}
-/* Pseudo-element left border keeps inner width at 2480px (no shrinkage) so
-   cell positions align with Row 37 and Row 8 */
-.row2::before {
-  content: '';
-  position: absolute;
-  left: 0; top: 0; width: var(--bw); height: 100%;
-  background: #1a1a1a;
-  z-index: 50;
-  pointer-events: none;
 }
 .row2Cell {
   display: flex; flex-direction: column; align-items: center;
@@ -131,6 +120,7 @@
 .photoRect {
   width: 75%; height: 75%;
   flex-shrink: 0;
+  display: block;
 }
 
 .photoArrow {
@@ -158,17 +148,7 @@
 /* ── Row 8 — 24 swatch cells / selected highlights ───────────────────────── */
 .row8 {
   position: relative; overflow: hidden;
-  border-top: var(--bw) solid #1a1a1a;
-  border-bottom: var(--bw) solid #1a1a1a;
   height: 181.25px; box-sizing: border-box;
-}
-.row8::before {
-  content: '';
-  position: absolute;
-  left: 0; top: 0; width: var(--bw); height: 100%;
-  background: #1a1a1a;
-  z-index: 50;
-  pointer-events: none;
 }
 .row8Cell {
   display: flex; align-items: center; justify-content: center;

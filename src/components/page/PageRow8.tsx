@@ -39,13 +39,23 @@ export function PageRow8({ selectedProject, isFlyActive }: PageRow8Props) {
   const { row8 } = theme.pageColors;
   const labelColor = theme.id === "blue" ? theme.pageColors.labelColor : "#1a1a1a";
 
+  const borderStyle: React.CSSProperties = {
+    position: "absolute", background: "#1a1a1a", zIndex: 50, pointerEvents: "none",
+  };
+
   return (
     <motion.div
       className={`${styles.row} ${styles.row8}`}
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
+      initial={{ clipPath: "inset(0 0 0 100%)" }}
+      animate={{ clipPath: "inset(0 0 0 0%)" }}
       transition={EASE}
     >
+      {/* Left border */}
+      <div style={{ ...borderStyle, left: 0, top: 0, width: "var(--bw)", height: "100%" }} />
+      {/* Top border */}
+      <div style={{ ...borderStyle, top: 0, left: 0, right: 0, height: "var(--bw)" }} />
+      {/* Bottom border */}
+      <div style={{ ...borderStyle, bottom: 0, left: 0, right: 0, height: "var(--bw)" }} />
       {Array.from({ length: 24 }, (_, flatIdx) => {
         const proj = Math.floor(flatIdx / 4);
         const h    = flatIdx % 4;

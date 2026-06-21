@@ -34,22 +34,31 @@ interface PageRow2Props {
   selectedProject: number | null;
   onProjectClick: (col: number) => void;
   isFlyActive?: boolean;
+  projectNames?: string[];
 }
 
-export function PageRow2({ hoveredCol, onColEnter, onColLeave, selectedProject, onProjectClick, isFlyActive }: PageRow2Props) {
+export function PageRow2({ hoveredCol, onColEnter, onColLeave, selectedProject, onProjectClick, isFlyActive, projectNames }: PageRow2Props) {
   const { theme } = useTheme();
   const { row2 } = theme.pageColors;
   const labelColor = theme.id === "blue" ? theme.pageColors.labelColor : "#1a1a1a";
 
   const isAnySelected = selectedProject !== null;
 
+  const borderStyle: React.CSSProperties = {
+    position: "absolute", background: "#1a1a1a", zIndex: 50, pointerEvents: "none",
+  };
+
   return (
     <motion.div
       className={`${styles.row} ${styles.row2}`}
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
+      initial={{ clipPath: "inset(0 0 0 100%)" }}
+      animate={{ clipPath: "inset(0 0 0 0%)" }}
       transition={EASE}
     >
+      {/* Left border */}
+      <div style={{ ...borderStyle, left: 0, top: 0, width: "var(--bw)", height: "100%" }} />
+      {/* Bottom border */}
+      <div style={{ ...borderStyle, bottom: 0, left: 0, right: 0, height: "var(--bw)" }} />
       {[0, 1, 2, 3, 4, 5].map((i) => {
         const bg = row2[i] ?? "#fff0cc";
         const isThisSelected = isAnySelected && i === selectedProject;
@@ -84,14 +93,21 @@ export function PageRow2({ hoveredCol, onColEnter, onColLeave, selectedProject, 
                   transition={{ duration: 0.25 }}
                 >
                   <div className={styles.row2LabelSection} style={{ width: LABEL_W }}>
-                    <span className={`${styles.projectLabel} moon`} style={{ color: labelColor }}>
-                      PROJECT {i + 1}
+                    <span className={`${styles.projectLabel} moon`} style={{ color: labelColor, display: "flex", flexDirection: "column", alignItems: "center" }}>
+                      {projectNames?.[i] ? (
+                        <>
+                          <span style={{ fontWeight: 700 }}>{projectNames[i].split("\n")[0]}</span>
+                          <span style={{ fontWeight: 400 }}>{projectNames[i].split("\n")[1]}</span>
+                        </>
+                      ) : `PROJECT ${i + 1}`}
                     </span>
                   </div>
-                  <div className={styles.row2BioSection}>
-                    <span className={`${styles.projectBio} moon`} style={{ color: labelColor }}>
-                      {Array(25).fill("Project Bio").join(" ")}
-                    </span>
+                  <div className={styles.row2BioSection} style={{ justifyContent: "flex-end" }}>
+                    <div style={{ width: SELECTED_W / 2, flexShrink: 0 }}>
+                      <span className={`${styles.projectBio} moon`} style={{ color: labelColor }}>
+                        {Array(25).fill("Project Bio").join(" ")}
+                      </span>
+                    </div>
                   </div>
                 </motion.div>
               ) : isAnySelected ? (
@@ -108,11 +124,16 @@ export function PageRow2({ hoveredCol, onColEnter, onColLeave, selectedProject, 
                 <motion.span
                   key="label"
                   className={`${styles.projectLabel} moon`}
-                  style={{ color: "#1a1a1a" }}
+                  style={{ color: "#1a1a1a", display: "flex", flexDirection: "column", alignItems: "center" }}
                   initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
                   transition={{ duration: 0.25 }}
                 >
-                  PROJECT {i + 1}
+                  {projectNames?.[i] ? (
+                    <>
+                      <span style={{ fontWeight: 700 }}>{projectNames[i].split("\n")[0]}</span>
+                      <span style={{ fontWeight: 400 }}>{projectNames[i].split("\n")[1]}</span>
+                    </>
+                  ) : `PROJECT ${i + 1}`}
                 </motion.span>
               )}
             </AnimatePresence>
