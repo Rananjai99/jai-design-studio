@@ -35,6 +35,87 @@ const PAGE_TITLES: Record<string, string> = {
 interface ProjectMedia { cover?: string; photos: string[]; }
 
 const PROJECT_MEDIA: Record<string, Record<number, ProjectMedia>> = {
+  "architecture-interiors": {
+    0: {
+      cover: "/images/architecture-interiors/project-1/cover/poster8.jpg",
+      photos: [
+        "/images/architecture-interiors/project-1/photos/poster1.jpg",
+        "/images/architecture-interiors/project-1/photos/poster4.jpg",
+        "/images/architecture-interiors/project-1/photos/poster6.jpg",
+        "/images/architecture-interiors/project-1/photos/poster7.jpg",
+        "/images/architecture-interiors/project-1/photos/poster8.jpg",
+      ],
+    },
+    1: {
+      cover: "/images/architecture-interiors/project-2/cover/poster (1).jpg",
+      photos: [
+        "/images/architecture-interiors/project-2/photos/poster (1).jpg",
+      ],
+    },
+    2: {
+      cover: "/images/architecture-interiors/project-3/cover/poster 01.jpg",
+      photos: [
+        "/images/architecture-interiors/project-3/photos/poster 00.jpg",
+        "/images/architecture-interiors/project-3/photos/poster 01.jpg",
+        "/images/architecture-interiors/project-3/photos/poster 02.jpg",
+        "/images/architecture-interiors/project-3/photos/poster 04.jpg",
+        "/images/architecture-interiors/project-3/photos/poster 05.jpg",
+        "/images/architecture-interiors/project-3/photos/poster 06.jpg",
+      ],
+    },
+    3: {
+      cover: "/images/architecture-interiors/project-4/cover/1 Tiny House.jpg",
+      photos: [
+        "/images/architecture-interiors/project-4/photos/1 Tiny House.jpg",
+        "/images/architecture-interiors/project-4/photos/01.jpg",
+        "/images/architecture-interiors/project-4/photos/02.jpg",
+        "/images/architecture-interiors/project-4/photos/03.jpg",
+        "/images/architecture-interiors/project-4/photos/3.jpg",
+        "/images/architecture-interiors/project-4/photos/4.png",
+        "/images/architecture-interiors/project-4/photos/5.png",
+        "/images/architecture-interiors/project-4/photos/6.png",
+        "/images/architecture-interiors/project-4/photos/7.png",
+      ],
+    },
+    4: {
+      photos: [],
+    },
+    5: {
+      photos: [],
+    },
+  },
+  "furniture-design": {
+    0: {
+      cover: "/images/furniture-design/project-2/cover/Maithu_04 Poster (1).jpg",
+      photos: [
+        "/images/furniture-design/project-2/photos/03 (1).jpg",
+        "/images/furniture-design/project-2/photos/Maithu_04 Poster (1).jpg",
+      ],
+    },
+    1: {
+      photos: [
+        "/images/furniture-design/project-3/photos/1 Main.jpg",
+        "/images/furniture-design/project-3/photos/2 Side 1.jpg",
+        "/images/furniture-design/project-3/photos/3 Side 2.jpg",
+      ],
+    },
+  },
+  "industrial-design": {
+    0: {
+      cover: "/images/industrial-design/project-1/cover/60f849692e5019fbc452d770440388a3.jpg",
+      photos: [
+        "/images/industrial-design/project-1/photos/000256aed5a573d4ac92fb9cdb554803.jpg",
+        "/images/industrial-design/project-1/photos/27afd8d9b09bc7ddec578bdc08cccde6.jpg",
+        "/images/industrial-design/project-1/photos/3e5bf38d52cd4c63299852ef1fd10743.jpg",
+        "/images/industrial-design/project-1/photos/444cdf0bbc89f760082ee18957db8b29.jpg",
+        "/images/industrial-design/project-1/photos/4990cd2e6de00a61750386e29494f03d.jpg",
+        "/images/industrial-design/project-1/photos/60f849692e5019fbc452d770440388a3.jpg",
+        "/images/industrial-design/project-1/photos/92e19b2253c3abca4ccc49efc4b97b52.jpg",
+        "/images/industrial-design/project-1/photos/99ef76ec7f0481309652f8d596b04ec0.jpg",
+        "/images/industrial-design/project-1/photos/a4264f6305ad146a8e237d06a53a2a04.jpg",
+      ],
+    },
+  },
   "photography": {
     0: {
       cover: "/images/photography/project-1/cover/_DSC2513.jpg",
@@ -59,7 +140,9 @@ const PROJECT_MEDIA: Record<string, Record<number, ProjectMedia>> = {
     1: {
       cover: "/images/photography/project-2/cover/Tiger4.jpg",
       photos: [
+        "/images/photography/project-2/photos/Laxmi.jpg",
         "/images/photography/project-2/photos/Laxmi2.jpg",
+        "/images/photography/project-2/photos/Tiger4.jpg",
       ],
     },
     2: {
@@ -69,6 +152,7 @@ const PROJECT_MEDIA: Record<string, Record<number, ProjectMedia>> = {
         "/images/photography/project-3/photos/DSC_0855-Edit.jpg",
         "/images/photography/project-3/photos/DSC_0864-Edit-Edit.jpg",
         "/images/photography/project-3/photos/DSC_7003-Edit.jpg",
+        "/images/photography/project-3/photos/Pushkar.jpg",
         "/images/photography/project-3/photos/rebari3-Edit.jpg",
         "/images/photography/project-3/photos/_DSC2433-Edit.jpg",
       ],
@@ -95,21 +179,41 @@ const PROJECT_MEDIA: Record<string, Record<number, ProjectMedia>> = {
         "/images/photography/project-5/photos/Birdie.jpg",
         "/images/photography/project-5/photos/DSC01847.JPG",
         "/images/photography/project-5/photos/DSC_0621.jpg",
+        "/images/photography/project-5/photos/DSC_7356.jpg",
         "/images/photography/project-5/photos/The Golden Oriole.jpg",
       ],
     },
     5: {
       cover: "/images/photography/project-6/cover/_DSC5620-Pano-Edit-Edit.jpg",
       photos: [
+        "/images/photography/project-6/photos/IMG_20200624_170523.jpg",
+        "/images/photography/project-6/photos/IMG_20200624_191856.jpg",
+        "/images/photography/project-6/photos/_DSC0588.jpg",
+        "/images/photography/project-6/photos/_DSC0727.jpg",
         "/images/photography/project-6/photos/_DSC5620-Pano-Edit-Edit.jpg",
+        "/images/photography/project-6/photos/_DSC9748-2.jpg",
         "/images/photography/project-6/photos/base.jpg",
-        "/images/photography/project-6/photos/C Hi.jpg",
       ],
     },
   },
 };
 
 const PROJECT_NAMES: Record<string, string[]> = {
+  "architecture-interiors": [
+    "'Gunijan Khana'\nArtist Homes",
+    "'Khandal House'\nPrivate Residence",
+    "'Domotex'\nGermany",
+    "Tiny House Project,\nUSA",
+    "Chaksu House",
+    "Kimbal",
+  ],
+  "furniture-design": [
+    "Project 1",
+    "Project 2",
+  ],
+  "industrial-design": [
+    "Project 1",
+  ],
   "photography": [
     "CHICAGO:\nThis vs This",
     "WILDLIFE:\nTigers",

@@ -15,10 +15,16 @@ const NATURAL_W   = CANVAS_W / 6;
 const OFFSET      = 48; // canvas margin in px
 
 // Lightbox frame constants (all in screen px)
-const FRAME_PX      = 15;  // outer frame border
+const FRAME_PX      = 25;  // outer frame border
 const CONTENT_INSET = 40;  // total mat padding from canvas edge to photo area
 const MAT_BEVEL     = 10;  // how many px the mat lip overlaps the photo on each side
 const LABEL_GAP_PX  = 16;  // gap between photo right edge and museum label
+
+// Wood texture image path — the actual photo uploaded by the user
+const WOOD_TEXTURE_URL = "/images/wood-frame.jpg";
+
+// Paper texture image path — actual paper texture uploaded by the user
+const PAPER_TEXTURE_URL = "/images/paper-mat.jpg";
 
 const EASE = { duration: 0.6, ease: [0.16, 1, 0.3, 1] as [number, number, number, number] };
 const HERO = { duration: 0.45, ease: [0.16, 1, 0.3, 1] as [number, number, number, number] };
@@ -170,7 +176,7 @@ export function PageRow37({ hoveredCol, onColEnter, onColLeave, selectedProject,
   const arrowBtn: React.CSSProperties = {
     background: "none", border: "none", cursor: "pointer",
     padding: "0 16px", display: "flex", alignItems: "center",
-    flexShrink: 0, pointerEvents: "auto",
+    flexShrink: 0, pointerEvents: "auto", outline: "none",
   };
 
   return (
@@ -347,20 +353,107 @@ export function PageRow37({ hoveredCol, onColEnter, onColLeave, selectedProject,
                 onClick={closeLightbox}
               />
 
-              {/* 2. Frame border + warm mat surface */}
+              {/* 2. Paper mat surface (frame drawn separately on top) */}
               <motion.div
                 key="canvas-bg"
                 initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
                 transition={{ duration: 0.2 }}
                 style={{
                   position: "fixed", top: OFFSET, left: OFFSET, width: csW, height: csH,
-                  backgroundColor: "#f5f2ed",
-                  border: `${FRAME_PX}px solid #1a1a1a`,
+                  backgroundImage: `linear-gradient(rgba(255,255,255,0.2), rgba(255,255,255,0.2)), url(${PAPER_TEXTURE_URL})`,
+                  backgroundSize: "50% 50%",
+                  backgroundRepeat: "repeat",
+                  backgroundPosition: "center",
                   boxSizing: "border-box",
-                  boxShadow: "0 8px 48px rgba(0,0,0,0.6), inset -24px 0 40px rgba(0,0,0,0.18), inset 0 -24px 40px rgba(0,0,0,0.18)",
+                  boxShadow: "0 8px 48px rgba(0,0,0,0.6)",
                   zIndex: 9997, pointerEvents: "none",
                 }}
               />
+
+              {/* 2c. Frame inner shadows — right and bottom edges cast onto the mat */}
+              <motion.div
+                key="frame-shadows"
+                initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+                transition={{ duration: 0.2 }}
+                style={{ position: "fixed", inset: 0, zIndex: 10000, pointerEvents: "none" }}
+              >
+                {/* right inner shadow */}
+                <div style={{
+                  position: "fixed",
+                  top: OFFSET + FRAME_PX, left: OFFSET + csW - FRAME_PX - 5,
+                  width: 5, height: csH - 2 * FRAME_PX,
+                  background: "linear-gradient(to left, rgba(0,0,0,0.14) 0%, transparent 100%)",
+                  pointerEvents: "none",
+                }} />
+                {/* bottom inner shadow */}
+                <div style={{
+                  position: "fixed",
+                  top: OFFSET + csH - FRAME_PX - 5, left: OFFSET + FRAME_PX,
+                  width: csW - 2 * FRAME_PX, height: 5,
+                  background: "linear-gradient(to top, rgba(0,0,0,0.14) 0%, transparent 100%)",
+                  pointerEvents: "none",
+                }} />
+              </motion.div>
+
+              {/* 2b. Wood photo frame — four mitred moulding pieces using actual texture */}
+              {(() => {
+                const t = FRAME_PX, W = csW, H = csH;
+                const z = 9997;
+                const base: React.CSSProperties = { position: "fixed", pointerEvents: "none", zIndex: z, overflow: "hidden" };
+                const shadow = "0 2px 8px rgba(0,0,0,0.45), inset 0 1px 0 rgba(255,248,235,0.3)";
+                // Side pieces: tall+narrow → cover scales to height → correct vertical grain
+                const woodSide: React.CSSProperties = {
+                  backgroundImage: `url(${WOOD_TEXTURE_URL})`,
+                  backgroundSize: "cover",
+                  backgroundPosition: "center",
+                };
+                // Top/bottom pieces: inner div t×W, rotated 90° → W×t after rotation,
+                // covering the full piece width. backgroundSize locked to H×H (same scale
+                // as the side pieces) and set to repeat so seamless grain fills the span.
+                const woodRotatedInner = (pieceW: number): React.CSSProperties => ({
+                  position: "absolute",
+                  width: t,
+                  height: pieceW,           // W — after 90° rotation this becomes the width
+                  top: (t - pieceW) / 2,    // centres the tall inner div in the t-high piece
+                  left: (pieceW - t) / 2,   // centres the thin inner div in the W-wide piece
+                  transform: "rotate(90deg)",
+                  transformOrigin: "center center",
+                  backgroundImage: `url(${WOOD_TEXTURE_URL})`,
+                  backgroundSize: `${H}px ${H}px`, // lock to same scale as side pieces
+                  backgroundRepeat: "repeat",       // seamless tile fills full span
+                  backgroundPosition: "center",
+                  pointerEvents: "none",
+                });
+                return (
+                  <motion.div
+                    key="wood-frame"
+                    initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+                    transition={{ duration: 0.2 }}
+                    style={{ position: "fixed", inset: 0, zIndex: z, pointerEvents: "none" }}
+                  >
+                    {/* top — inner div rotated 90° so grain direction & scale matches sides */}
+                    <div style={{ ...base, top: OFFSET, left: OFFSET, width: W, height: t,
+                      boxShadow: shadow,
+                      clipPath: `polygon(0 0, ${W}px 0, ${W - t}px ${t}px, ${t}px ${t}px)` }}>
+                      <div style={woodRotatedInner(W)} />
+                    </div>
+                    {/* bottom */}
+                    <div style={{ ...base, top: OFFSET + H - t, left: OFFSET, width: W, height: t,
+                      boxShadow: shadow,
+                      clipPath: `polygon(${t}px 0, ${W - t}px 0, ${W}px ${t}px, 0 ${t}px)` }}>
+                      <div style={woodRotatedInner(W)} />
+                    </div>
+                    {/* left — vertical grain naturally from cover on narrow+tall div */}
+                    <div style={{ ...base, top: OFFSET, left: OFFSET, width: t, height: H,
+                      ...woodSide, boxShadow: shadow,
+                      clipPath: `polygon(0 0, ${t}px ${t}px, ${t}px ${H - t}px, 0 ${H}px)` }} />
+                    {/* right */}
+                    <div style={{ ...base, top: OFFSET, left: OFFSET + W - t, width: t, height: H,
+                      ...woodSide, boxShadow: shadow,
+                      clipPath: `polygon(${t}px 0, ${t}px ${H}px, 0 ${H - t}px, 0 ${t}px)` }} />
+                  </motion.div>
+                );
+              })()}
 
               {/* 3. Photo — sits behind the mat lip (lower z than mat strips) */}
               <motion.img
@@ -382,15 +475,14 @@ export function PageRow37({ hoveredCol, onColEnter, onColLeave, selectedProject,
                 }}
               />
 
-              {/* 5. Mat lip strips — overlap photo edges by MAT_BEVEL, same colour as mat */}
+              {/* 5. Mat lip strips — overlap photo edges by MAT_BEVEL, paper texture */}
               {(() => {
                 const { top: pt, left: pl, width: pw, height: ph } = lightboxFinal;
                 const matTop  = OFFSET + FRAME_PX, matLeft = OFFSET + FRAME_PX;
                 const matW    = csW - 2 * FRAME_PX, matH = csH - 2 * FRAME_PX;
                 const bevel   = MAT_BEVEL;
-                const bg      = "#f5f2ed";
                 const z       = 9999;
-                const base: React.CSSProperties = { position: "fixed", backgroundColor: bg, zIndex: z, pointerEvents: "none" };
+                const base: React.CSSProperties = { position: "fixed", backgroundImage: `linear-gradient(rgba(255,255,255,0.2), rgba(255,255,255,0.2)), url(${PAPER_TEXTURE_URL})`, backgroundSize: "100vw 100vh", backgroundAttachment: "fixed", backgroundPosition: "center", zIndex: z, pointerEvents: "none" };
                 return (
                   <motion.div key="mat-strips" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.2 }} style={{ position: "fixed", inset: 0, zIndex: z, pointerEvents: "none" }}>
                     {/* top strip */}
@@ -472,7 +564,7 @@ export function PageRow37({ hoveredCol, onColEnter, onColLeave, selectedProject,
                 }}
               >
                 <button style={{ ...arrowBtn, visibility: photoIndex > 0 ? "visible" : "hidden" }} onClick={() => setPhotoIndex(p => Math.max(0, p - 1))} aria-label="Previous photo">
-                  <ChevronLeft color="#1a1a1a" size={25} />
+                  <ChevronLeft color="#1a1a1a" size={20} />
                 </button>
               </motion.div>
 
@@ -483,13 +575,13 @@ export function PageRow37({ hoveredCol, onColEnter, onColLeave, selectedProject,
                 style={{
                   position: "fixed", zIndex: 10001,
                   top: lightboxFinal.top + lightboxFinal.height / 2,
-                  left: lightboxFinal.left + lightboxFinal.width - MAT_BEVEL,
+                  left: lightboxFinal.left + lightboxFinal.width + MAT_BEVEL,
                   transform: "translateY(-50%)",
                   pointerEvents: photoIndex < selectedPhotos.length - 1 ? "auto" : "none",
                 }}
               >
                 <button style={{ ...arrowBtn, visibility: photoIndex < selectedPhotos.length - 1 ? "visible" : "hidden" }} onClick={() => setPhotoIndex(p => Math.min(selectedPhotos.length - 1, p + 1))} aria-label="Next photo">
-                  <ChevronRight color="#1a1a1a" size={25} />
+                  <ChevronRight color="#1a1a1a" size={20} />
                 </button>
               </motion.div>
             </>
